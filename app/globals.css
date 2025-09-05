@@ -44,6 +44,10 @@
     @apply bg-ethiopian-yellow text-ethiopian-red px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:bg-yellow-400 hover:scale-105 active:scale-95;
   }
   
+  .btn-outline {
+    @apply border-2 border-ethiopian-red text-ethiopian-red bg-transparent px-6 py-3 rounded-full font-semibold transition-all duration-300 hover:bg-ethiopian-red hover:text-white hover:scale-105 active:scale-95;
+  }
+  
   .input-field {
     @apply w-full px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-ethiopian-red focus:outline-none transition-colors duration-300;
   }

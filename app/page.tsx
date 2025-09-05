@@ -458,6 +458,8 @@ export default function Home() {
                   cardDataUrl={cardDataUrl}
                   cardName={currentCard.name || 'Enkutatash Greeting Card'}
                   onDownload={handleDownload}
+                  cardMessage={currentCard.message}
+                  amharicMessage={currentCard.amharicMessage}
                 />
               </div>
 
