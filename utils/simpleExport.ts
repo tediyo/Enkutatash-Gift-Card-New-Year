@@ -8,13 +8,12 @@ export const simpleExportCard = async (element: HTMLElement): Promise<string> =>
     throw new Error('Could not get canvas context')
   }
 
-  // Set canvas size with higher resolution
-  const scale = 4 // Much higher resolution
-  canvas.width = element.offsetWidth * scale
-  canvas.height = element.offsetHeight * scale
+  // Set canvas size
+  canvas.width = element.offsetWidth * 2 // Higher resolution
+  canvas.height = element.offsetHeight * 2
 
   // Scale the context
-  ctx.scale(scale, scale)
+  ctx.scale(2, 2)
 
   // Create a temporary container to render the element
   const tempContainer = document.createElement('div')
@@ -41,7 +40,7 @@ export const simpleExportCard = async (element: HTMLElement): Promise<string> =>
     const html2canvas = (await import('html2canvas')).default
     const canvasResult = await html2canvas(tempContainer, {
       backgroundColor: '#ffffff',
-      scale: 4, // Much higher resolution
+      scale: 2,
       useCORS: true,
       allowTaint: true,
       logging: false,
@@ -65,13 +64,12 @@ export const canvasExportCard = (element: HTMLElement): string => {
     throw new Error('Could not get canvas context')
   }
 
-  // Set canvas size with higher resolution
-  const scale = 4 // Much higher resolution
-  canvas.width = element.offsetWidth * scale
-  canvas.height = element.offsetHeight * scale
+  // Set canvas size
+  canvas.width = element.offsetWidth * 2
+  canvas.height = element.offsetHeight * 2
 
   // Scale the context
-  ctx.scale(scale, scale)
+  ctx.scale(2, 2)
 
   // Fill with white background
   ctx.fillStyle = '#ffffff'
