@@ -31,31 +31,31 @@ export interface CardTemplate {
 const templates: CardTemplate[] = [
   {
     id: 'meskel-flowers',
-    name: 'Meskel Flowers',
-    preview: '🌺',
-    background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF6B35 100%)',
+    name: 'Meskel Daisies',
+    preview: '🌼',
+    background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 30%, #FF8C00 70%, #FFD700 100%)',
     pattern: 'meskel'
   },
   {
-    id: 'cultural-pattern',
-    name: 'Cultural Pattern',
-    preview: '🏛️',
-    background: 'linear-gradient(135deg, #DA1212 0%, #FCDD09 50%, #078930 100%)',
-    pattern: 'cultural'
+    id: 'yellow-garden',
+    name: 'Yellow Garden',
+    preview: '🌻',
+    background: 'linear-gradient(135deg, #FFF8DC 0%, #FFD700 25%, #FFA500 50%, #FF8C00 75%, #FFD700 100%)',
+    pattern: 'garden'
   },
   {
     id: 'golden-sunrise',
     name: 'Golden Sunrise',
-    preview: '☀️',
-    background: 'linear-gradient(135deg, #FF6B35 0%, #FCDD09 100%)',
+    preview: '🌅',
+    background: 'linear-gradient(135deg, #FFE4B5 0%, #FFD700 40%, #FFA500 80%, #FF8C00 100%)',
     pattern: 'sunrise'
   },
   {
-    id: 'ethiopian-flag',
-    name: 'Ethiopian Pride',
-    preview: '🇪🇹',
-    background: 'linear-gradient(135deg, #078930 0%, #FCDD09 25%, #DA1212 50%, #FCDD09 75%, #078930 100%)',
-    pattern: 'flag'
+    id: 'ethiopian-spring',
+    name: 'Ethiopian Spring',
+    preview: '🌸',
+    background: 'linear-gradient(135deg, #F0E68C 0%, #FFD700 30%, #FFA500 60%, #FF8C00 90%, #FFD700 100%)',
+    pattern: 'spring'
   }
 ]
 
@@ -180,28 +180,49 @@ export default function Home() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        {/* Background Elements */}
+        {/* Background Elements - Yellow Flowers */}
         <div className="absolute inset-0 overflow-hidden">
           <motion.div
-            className="absolute top-10 left-10 text-6xl opacity-20"
+            className="absolute top-10 left-10 text-6xl opacity-30"
             animate={{ rotate: 360 }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           >
-            🌺
+            🌼
           </motion.div>
           <motion.div
-            className="absolute top-20 right-20 text-4xl opacity-30"
+            className="absolute top-20 right-20 text-5xl opacity-40"
             animate={{ y: [-10, 10, -10] }}
             transition={{ duration: 3, repeat: Infinity }}
           >
-            ⭐
+            🌻
           </motion.div>
           <motion.div
-            className="absolute bottom-20 left-1/4 text-5xl opacity-25"
+            className="absolute bottom-20 left-1/4 text-6xl opacity-35"
             animate={{ x: [-20, 20, -20] }}
             transition={{ duration: 4, repeat: Infinity }}
           >
             🌸
+          </motion.div>
+          <motion.div
+            className="absolute top-1/2 right-1/4 text-4xl opacity-25"
+            animate={{ scale: [0.8, 1.2, 0.8] }}
+            transition={{ duration: 5, repeat: Infinity }}
+          >
+            🌺
+          </motion.div>
+          <motion.div
+            className="absolute bottom-1/3 right-10 text-3xl opacity-30"
+            animate={{ rotate: [0, 15, -15, 0] }}
+            transition={{ duration: 6, repeat: Infinity }}
+          >
+            🌼
+          </motion.div>
+          <motion.div
+            className="absolute top-1/3 left-1/3 text-4xl opacity-20"
+            animate={{ y: [-15, 15, -15] }}
+            transition={{ duration: 4.5, repeat: Infinity }}
+          >
+            🌻
           </motion.div>
         </div>
 
