@@ -15,6 +15,83 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
     console.log('ExportableCard template:', template.id, template.background)
     console.log('ExportableCard background URL:', `url(${template.background})`)
 
+    const getBorderConfig = (templateId: string) => {
+      switch (templateId) {
+        case 'meskel-flowers':
+          return {
+            borderColor: '#FF6B35',
+            borderWidth: '3px',
+            borderStyle: 'solid',
+            borderRadius: '16px',
+            boxShadow: '0 0 20px rgba(255, 107, 53, 0.3), inset 0 0 20px rgba(255, 107, 53, 0.1)'
+          }
+        case 'yellow-garden':
+          return {
+            borderColor: '#FFD700',
+            borderWidth: '4px',
+            borderStyle: 'double',
+            borderRadius: '20px',
+            boxShadow: '0 0 25px rgba(255, 215, 0, 0.4), inset 0 0 25px rgba(255, 215, 0, 0.1)'
+          }
+        case 'golden-sunrise':
+          return {
+            borderColor: '#FF8C00',
+            borderWidth: '3px',
+            borderStyle: 'solid',
+            borderRadius: '24px',
+            boxShadow: '0 0 30px rgba(255, 140, 0, 0.5), inset 0 0 30px rgba(255, 140, 0, 0.1)'
+          }
+        case 'ethiopian-spring':
+          return {
+            borderColor: '#FF6347',
+            borderWidth: '2px',
+            borderStyle: 'solid',
+            borderRadius: '18px',
+            boxShadow: '0 0 15px rgba(255, 99, 71, 0.3), inset 0 0 15px rgba(255, 99, 71, 0.1)'
+          }
+        case 'classic-meskel':
+          return {
+            borderColor: '#CD853F',
+            borderWidth: '5px',
+            borderStyle: 'groove',
+            borderRadius: '12px',
+            boxShadow: '0 0 35px rgba(205, 133, 63, 0.4), inset 0 0 35px rgba(205, 133, 63, 0.1)'
+          }
+        case 'vibrant-garden':
+          return {
+            borderColor: '#FF4500',
+            borderWidth: '4px',
+            borderStyle: 'solid',
+            borderRadius: '28px',
+            boxShadow: '0 0 40px rgba(255, 69, 0, 0.6), inset 0 0 40px rgba(255, 69, 0, 0.1)'
+          }
+        case 'sunset-bloom':
+          return {
+            borderColor: '#FF7F50',
+            borderWidth: '3px',
+            borderStyle: 'ridge',
+            borderRadius: '22px',
+            boxShadow: '0 0 25px rgba(255, 127, 80, 0.4), inset 0 0 25px rgba(255, 127, 80, 0.1)'
+          }
+        case 'spring-celebration':
+          return {
+            borderColor: '#FF1493',
+            borderWidth: '6px',
+            borderStyle: 'double',
+            borderRadius: '32px',
+            boxShadow: '0 0 45px rgba(255, 20, 147, 0.5), inset 0 0 45px rgba(255, 20, 147, 0.1)'
+          }
+        default:
+          return {
+            borderColor: '#FF6B35',
+            borderWidth: '3px',
+            borderStyle: 'solid',
+            borderRadius: '16px',
+            boxShadow: '0 0 20px rgba(255, 107, 53, 0.3), inset 0 0 20px rgba(255, 107, 53, 0.1)'
+          }
+      }
+    }
+
     const getTemplateConfig = (templateId: string) => {
       switch (templateId) {
         case 'meskel-flowers':
@@ -209,6 +286,7 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
         className="w-96 h-[480px] relative overflow-hidden bg-white rounded-3xl shadow-2xl"
         style={{
           ...getTemplateStyle(template),
+          ...getBorderConfig(template.id),
           // Ensure proper rendering for html2canvas
           transform: 'translateZ(0)',
           backfaceVisibility: 'hidden',
@@ -376,8 +454,6 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
           </div>
         </div>
 
-        {/* Border Decoration */}
-        <div className="absolute inset-3 border-2 border-white border-opacity-30 rounded-2xl"></div>
       </div>
     )
   }
