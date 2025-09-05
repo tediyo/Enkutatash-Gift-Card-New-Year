@@ -11,6 +11,10 @@ export const metadata: Metadata = {
   keywords: 'Enkutatash, Ethiopian New Year, greeting cards, cultural celebration, Meskel flowers',
   authors: [{ name: 'Enkutatash App' }],
   viewport: 'width=device-width, initial-scale=1',
+  icons: {
+    icon: '/images/flowers/FW2.webp',
+    apple: '/images/flowers/FW2.webp',
+  },
 }
 
 export default function RootLayout({
@@ -21,6 +25,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <link rel="icon" href="/images/flowers/FW2.webp" />
+        <link rel="apple-touch-icon" href="/images/flowers/FW2.webp" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link 
