@@ -409,7 +409,8 @@ export default function Home() {
               <h2 className="mobile-h2 text-2xl md:text-3xl font-bold text-ethiopian-green">Create Your Greeting Card</h2>
               <button
                 onClick={() => setShowCardCreator(false)}
-                className="text-green-500 hover:text-green-800 text-xl md:text-3xl mobile-touch-target"
+                className="text-green-500 hover:text-green-800 text-xl md:text-3
+                xl mobile-touch-target"
               >
                 ×
               </button>
