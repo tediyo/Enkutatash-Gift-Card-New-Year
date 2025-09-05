@@ -56,6 +56,34 @@ const templates: CardTemplate[] = [
     preview: '🌸',
     background: '/images/flowers/FW2.webp',
     pattern: 'spring'
+  },
+  {
+    id: 'classic-meskel',
+    name: 'Classic Meskel',
+    preview: '🌺',
+    background: '/images/flowers/EF.jpg',
+    pattern: 'classic'
+  },
+  {
+    id: 'vibrant-garden',
+    name: 'Vibrant Garden',
+    preview: '🌻',
+    background: '/images/flowers/EF5.jpg',
+    pattern: 'vibrant'
+  },
+  {
+    id: 'sunset-bloom',
+    name: 'Sunset Bloom',
+    preview: '🌅',
+    background: '/images/flowers/FR3.jpg',
+    pattern: 'sunset'
+  },
+  {
+    id: 'spring-celebration',
+    name: 'Spring Celebration',
+    preview: '🌸',
+    background: '/images/flowers/FW2.webp',
+    pattern: 'celebration'
   }
 ]
 

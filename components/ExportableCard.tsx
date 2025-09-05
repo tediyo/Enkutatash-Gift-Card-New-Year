@@ -14,7 +14,95 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
     // Debug logging
     console.log('ExportableCard template:', template.id, template.background)
     console.log('ExportableCard background URL:', `url(${template.background})`)
-      const getPatternStyle = (pattern: string) => {
+
+    const getTemplateConfig = (templateId: string) => {
+      switch (templateId) {
+        case 'meskel-flowers':
+          return {
+            fontFamily: "'Playfair Display', serif",
+            textColor: '#8B4513',
+            accentColor: '#FF6B35',
+            backgroundColor: '#FFF8DC'
+          }
+        case 'yellow-garden':
+          return {
+            fontFamily: "'Dancing Script', cursive",
+            textColor: '#2F4F2F',
+            accentColor: '#FFD700',
+            backgroundColor: '#F0FFF0'
+          }
+        case 'golden-sunrise':
+          return {
+            fontFamily: "'Pacifico', cursive",
+            textColor: '#8B4513',
+            accentColor: '#FF8C00',
+            backgroundColor: '#FFFACD'
+          }
+        case 'ethiopian-spring':
+          return {
+            fontFamily: "'Lobster', cursive",
+            textColor: '#228B22',
+            accentColor: '#FF6347',
+            backgroundColor: '#F0F8FF'
+          }
+        case 'classic-meskel':
+          return {
+            fontFamily: "'Cinzel', serif",
+            textColor: '#B8860B',
+            accentColor: '#CD853F',
+            backgroundColor: '#F5F5DC'
+          }
+        case 'vibrant-garden':
+          return {
+            fontFamily: "'Fredoka One', cursive",
+            textColor: '#8B0000',
+            accentColor: '#FF4500',
+            backgroundColor: '#FFE4B5'
+          }
+        case 'sunset-bloom':
+          return {
+            fontFamily: "'Righteous', cursive",
+            textColor: '#8B4513',
+            accentColor: '#FF7F50',
+            backgroundColor: '#FFEBCD'
+          }
+        case 'spring-celebration':
+          return {
+            fontFamily: "'Bungee', cursive",
+            textColor: '#2E8B57',
+            accentColor: '#FF1493',
+            backgroundColor: '#F0FFFF'
+          }
+        default:
+          return {
+            fontFamily: "'Playfair Display', serif",
+            textColor: '#8B4513',
+            accentColor: '#FF6B35',
+            backgroundColor: '#FFF8DC'
+          }
+      }
+    }
+
+    const getTemplateStyle = (template: CardTemplate) => {
+      const baseStyle = {
+        backgroundImage: `url(${template.background})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundColor: '#f0f0f0'
+      }
+
+      const patternStyle = getPatternStyle(template.pattern)
+      const templateConfig = getTemplateConfig(template.id)
+
+      return {
+        ...baseStyle,
+        ...patternStyle,
+        ...templateConfig
+      }
+    }
+
+    const getPatternStyle = (pattern: string) => {
     switch (pattern) {
       case 'meskel':
         return {
@@ -60,6 +148,56 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
           `,
           backgroundSize: '45px 45px, 55px 55px, 50px 50px, 65px 65px, 70px 70px, 40px 40px'
         }
+      case 'classic':
+        return {
+          backgroundImage: `
+            radial-gradient(circle at 25% 25%, rgba(255, 81, 7, 0.8) 10px, transparent 10px),
+            radial-gradient(circle at 75% 25%, rgba(255, 215, 0, 0.6) 8px, transparent 8px),
+            radial-gradient(circle at 25% 75%, rgba(255, 140, 0, 0.7) 12px, transparent 12px),
+            radial-gradient(circle at 75% 75%, rgba(255, 165, 0, 0.5) 9px, transparent 9px),
+            radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 15px, transparent 15px)
+          `,
+          backgroundSize: '80px 80px, 60px 60px, 90px 90px, 70px 70px, 100px 100px',
+          backgroundColor: '#1a1a1a'
+        }
+      case 'vibrant':
+        return {
+          backgroundImage: `
+            radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.6) 6px, transparent 6px),
+            radial-gradient(circle at 80% 20%, rgba(255, 140, 0, 0.5) 8px, transparent 8px),
+            radial-gradient(circle at 20% 80%, rgba(255, 165, 0, 0.7) 7px, transparent 7px),
+            radial-gradient(circle at 80% 80%, rgba(255, 255, 0, 0.4) 9px, transparent 9px),
+            linear-gradient(30deg, transparent 30%, rgba(255, 215, 0, 0.3) 30%, rgba(255, 140, 0, 0.3) 70%, transparent 70%)
+          `,
+          backgroundSize: '50px 50px, 65px 65px, 55px 55px, 75px 75px, 30px 30px',
+          backgroundColor: '#2d1b00'
+        }
+      case 'sunset':
+        return {
+          backgroundImage: `
+            radial-gradient(circle at 50% 0%, rgba(255, 140, 0, 0.6) 0%, transparent 70%),
+            radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.4) 8px, transparent 8px),
+            radial-gradient(circle at 70% 70%, rgba(255, 165, 0, 0.5) 10px, transparent 10px),
+            radial-gradient(circle at 20% 80%, rgba(255, 81, 7, 0.3) 6px, transparent 6px),
+            linear-gradient(60deg, transparent 40%, rgba(255, 140, 0, 0.2) 40%, rgba(255, 215, 0, 0.2) 60%, transparent 60%)
+          `,
+          backgroundSize: '100% 100%, 60px 60px, 80px 80px, 50px 50px, 25px 25px',
+          backgroundColor: '#1a0f00'
+        }
+      case 'celebration':
+        return {
+          backgroundImage: `
+            radial-gradient(circle at 15% 15%, rgba(255, 215, 0, 0.5) 8px, transparent 8px),
+            radial-gradient(circle at 85% 15%, rgba(255, 140, 0, 0.4) 10px, transparent 10px),
+            radial-gradient(circle at 15% 85%, rgba(255, 165, 0, 0.6) 7px, transparent 7px),
+            radial-gradient(circle at 85% 85%, rgba(255, 255, 0, 0.3) 9px, transparent 9px),
+            radial-gradient(circle at 50% 20%, rgba(255, 81, 7, 0.4) 6px, transparent 6px),
+            radial-gradient(circle at 50% 80%, rgba(255, 215, 0, 0.5) 8px, transparent 8px),
+            linear-gradient(45deg, transparent 25%, rgba(255, 140, 0, 0.2) 25%, rgba(255, 215, 0, 0.2) 75%, transparent 75%)
+          `,
+          backgroundSize: '70px 70px, 85px 85px, 65px 65px, 90px 90px, 55px 55px, 75px 75px, 35px 35px',
+          backgroundColor: '#0d0d0d'
+        }
       default:
         return {}
     }
@@ -70,12 +208,7 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
         ref={ref}
         className="w-96 h-[480px] relative overflow-hidden bg-white rounded-3xl shadow-2xl"
         style={{
-          backgroundImage: `url(${template.background})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundColor: '#f0f0f0', // Fallback background color
-          ...getPatternStyle(template.pattern),
+          ...getTemplateStyle(template),
           // Ensure proper rendering for html2canvas
           transform: 'translateZ(0)',
           backfaceVisibility: 'hidden',
@@ -192,25 +325,53 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
 
           {/* Amharic Greeting */}
           {card.amharicMessage && (
-            <div className="text-white text-2xl font-amharic mb-6 text-shadow">
+            <div 
+              className="text-2xl font-amharic mb-6 text-shadow"
+              style={{ 
+                color: getTemplateConfig(template.id).accentColor,
+                fontFamily: getTemplateConfig(template.id).fontFamily,
+                textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
+              }}
+            >
               {card.amharicMessage}
             </div>
           )}
 
           {/* English Message */}
-          <div className="text-white text-3xl font-bold mb-6 text-shadow">
+          <div 
+            className="text-3xl font-bold mb-6 text-shadow"
+            style={{ 
+              color: getTemplateConfig(template.id).textColor,
+              fontFamily: getTemplateConfig(template.id).fontFamily,
+              textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
+            }}
+          >
             {card.message || 'Happy Ethiopian New Year!'}
           </div>
 
           {/* Name */}
           {card.name && (
-            <div className="text-white text-2xl font-semibold text-shadow mb-4">
+            <div 
+              className="text-2xl font-semibold text-shadow mb-4"
+              style={{ 
+                color: getTemplateConfig(template.id).accentColor,
+                fontFamily: getTemplateConfig(template.id).fontFamily,
+                textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
+              }}
+            >
               - {card.name}
             </div>
           )}
 
           {/* Year */}
-          <div className="absolute bottom-6 left-6 text-white text-lg opacity-80">
+          <div 
+            className="absolute bottom-6 left-6 text-lg opacity-80"
+            style={{ 
+              color: getTemplateConfig(template.id).textColor,
+              fontFamily: getTemplateConfig(template.id).fontFamily,
+              textShadow: '1px 1px 2px rgba(0,0,0,0.8)'
+            }}
+          >
             2024
           </div>
         </div>
