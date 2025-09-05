@@ -223,7 +223,9 @@ export default function Home() {
         // Try the main export method first
         dataUrl = await exportCard('exportable-card', {
           format: 'png',
-          quality: 1
+          quality: 1.0, // Maximum quality
+          width: 1200, // Higher resolution
+          height: 800
         })
         console.log('Main export method successful')
       } catch (mainError) {
