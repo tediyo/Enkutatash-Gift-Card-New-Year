@@ -217,7 +217,13 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
         />
 
         {/* Decorative Elements */}
-        <FlowerDecoration templateId={template.id} />
+        <FlowerDecoration 
+          src="/images/flowers/EF.jpg" 
+          alt="Ethiopian New Year Decoration"
+          className="absolute top-4 right-4 opacity-60"
+          animation="float"
+          size="medium"
+        />
 
         {/* Main Content */}
         <div className="relative z-10 p-6 h-full flex flex-col justify-center items-center text-center">
