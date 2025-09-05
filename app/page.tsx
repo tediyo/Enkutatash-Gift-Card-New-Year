@@ -18,6 +18,9 @@ export interface GreetingCard {
   name: string
   message: string
   amharicMessage?: string
+  textColor?: string
+  amharicTextColor?: string
+  nameTextColor?: string
 }
 
 export interface CardTemplate {
@@ -114,7 +117,10 @@ export default function Home() {
     template: 'meskel-flowers',
     name: '',
     message: 'Happy Ethiopian New Year!',
-    amharicMessage: amharicGreetings[0]
+    amharicMessage: amharicGreetings[0],
+    textColor: '#2C1810',
+    amharicTextColor: '#2C1810',
+    nameTextColor: '#2C1810'
   })
   const [showCardCreator, setShowCardCreator] = useState(false)
   const [isGenerating, setIsGenerating] = useState(false)
@@ -149,6 +155,27 @@ export default function Home() {
     setCurrentCard(prev => ({
       ...prev,
       amharicMessage
+    }))
+  }
+
+  const handleTextColorChange = (textColor: string) => {
+    setCurrentCard(prev => ({
+      ...prev,
+      textColor
+    }))
+  }
+
+  const handleAmharicTextColorChange = (amharicTextColor: string) => {
+    setCurrentCard(prev => ({
+      ...prev,
+      amharicTextColor
+    }))
+  }
+
+  const handleNameTextColorChange = (nameTextColor: string) => {
+    setCurrentCard(prev => ({
+      ...prev,
+      nameTextColor
     }))
   }
 
@@ -399,6 +426,9 @@ export default function Home() {
                   value={currentCard.name}
                   onChange={handleNameChange}
                   placeholder="Enter your name"
+                  showColorPicker={true}
+                  textColor={currentCard.nameTextColor || '#2C1810'}
+                  onTextColorChange={handleNameTextColorChange}
                 />
 
                 <TextInput
@@ -407,6 +437,9 @@ export default function Home() {
                   onChange={handleMessageChange}
                   placeholder="Enter your greeting message"
                   multiline
+                  showColorPicker={true}
+                  textColor={currentCard.textColor || '#2C1810'}
+                  onTextColorChange={handleTextColorChange}
                 />
 
                 <TextInput
@@ -416,6 +449,9 @@ export default function Home() {
                   placeholder="Enter Amharic greeting"
                   multiline
                   fontFamily="amharic"
+                  showColorPicker={true}
+                  textColor={currentCard.amharicTextColor || '#2C1810'}
+                  onTextColorChange={handleAmharicTextColorChange}
                 />
 
                 <ShareOptions

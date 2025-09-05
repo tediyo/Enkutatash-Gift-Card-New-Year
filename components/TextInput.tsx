@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import ColorPicker from './ColorPicker'
 
 interface TextInputProps {
   label: string
@@ -10,6 +11,9 @@ interface TextInputProps {
   multiline?: boolean
   fontFamily?: string
   maxLength?: number
+  showColorPicker?: boolean
+  textColor?: string
+  onTextColorChange?: (color: string) => void
 }
 
 export default function TextInput({ 
@@ -19,7 +23,10 @@ export default function TextInput({
   placeholder, 
   multiline = false,
   fontFamily = 'inherit',
-  maxLength
+  maxLength,
+  showColorPicker = false,
+  textColor = '#2C1810',
+  onTextColorChange
 }: TextInputProps) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const newValue = e.target.value
@@ -30,7 +37,7 @@ export default function TextInput({
 
   return (
     <motion.div
-      className="space-y-2"
+      className="space-y-3"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -68,6 +75,15 @@ export default function TextInput({
         <div className="text-right text-xs text-gray-500">
           {value.length}/{maxLength} characters
         </div>
+      )}
+
+      {/* Color Picker */}
+      {showColorPicker && onTextColorChange && (
+        <ColorPicker
+          label="Text Color"
+          value={textColor}
+          onChange={onTextColorChange}
+        />
       )}
     </motion.div>
   )

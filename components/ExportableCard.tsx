@@ -227,6 +227,7 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
               className="mb-4 text-lg font-bold"
               style={{
                 ...textConfig,
+                color: card.amharicTextColor || textConfig.color,
                 fontFamily: 'Arial, sans-serif',
                 fontSize: '18px',
                 lineHeight: '1.4'
@@ -241,6 +242,7 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
             className="mb-4 text-xl font-bold"
             style={{
               ...textConfig,
+              color: card.textColor || textConfig.color,
               fontSize: '20px',
               lineHeight: '1.3'
             }}
@@ -254,6 +256,7 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
               className="text-lg font-semibold"
               style={{
                 ...textConfig,
+                color: card.nameTextColor || textConfig.color,
                 fontSize: '16px',
                 lineHeight: '1.2'
               }}
