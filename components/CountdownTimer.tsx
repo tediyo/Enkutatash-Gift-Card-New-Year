@@ -44,7 +44,7 @@ export default function CountdownTimer() {
   const isNewYear = !isPast && timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0
 
   return (
-    <div className="bg-white bg-opacity-20 backdrop-blur-md rounded-2xl p-6 mb-8 border-4 border-green-500 shadow-lg shadow-green-500/25">
+    <div className="bg-white bg-opacity-20 backdrop-blur-md rounded-2xl p-6 mb-8 border-4 border-yellow-500 shadow-lg shadow-yellow-500/25">
       <motion.h3 
         className="text-xl md:text-2xl text-white text-shadow mb-4 text-center"
         animate={isNewYear ? { scale: [1, 1.1, 1] } : {}}
