@@ -12,7 +12,8 @@ import {
   Linkedin, 
   Instagram,
   QrCode,
-  Smartphone
+  Smartphone,
+  Send
 } from 'lucide-react'
 import { useState } from 'react'
 
@@ -79,7 +80,7 @@ export default function ShareOptions({
     {
       name: 'WhatsApp',
       icon: MessageCircle,
-      color: 'bg-green-500',
+      color: 'bg-yellow-500',
       action: () => {
         const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`
         window.open(whatsappUrl, '_blank')
@@ -88,7 +89,7 @@ export default function ShareOptions({
     {
       name: 'Facebook',
       icon: Facebook,
-      color: 'bg-blue-600',
+      color: 'bg-yellow-600',
       action: () => {
         const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(shareText)}`
         window.open(facebookUrl, '_blank')
@@ -97,7 +98,7 @@ export default function ShareOptions({
     {
       name: 'Twitter',
       icon: Twitter,
-      color: 'bg-blue-400',
+      color: 'bg-yellow-400',
       action: () => {
         const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`
         window.open(twitterUrl, '_blank')
@@ -105,8 +106,8 @@ export default function ShareOptions({
     },
     {
       name: 'Telegram',
-      icon: Share2,
-      color: 'bg-blue-500',
+      icon: Send,
+      color: 'bg-yellow-700',
       action: () => {
         const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(shareUrl)}&text=${encodeURIComponent(shareText)}`
         window.open(telegramUrl, '_blank')
@@ -115,7 +116,7 @@ export default function ShareOptions({
     {
       name: 'LinkedIn',
       icon: Linkedin,
-      color: 'bg-blue-700',
+      color: 'bg-yellow-800',
       action: () => {
         const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(cardName)}&summary=${encodeURIComponent(shareText)}`
         window.open(linkedinUrl, '_blank')
@@ -124,7 +125,7 @@ export default function ShareOptions({
     {
       name: 'Instagram',
       icon: Instagram,
-      color: 'bg-pink-500',
+      color: 'bg-yellow-500',
       action: () => {
         // Instagram doesn't support direct URL sharing, so we copy the text
         navigator.clipboard.writeText(shareText)
@@ -138,7 +139,7 @@ export default function ShareOptions({
     {
       name: 'Email',
       icon: Mail,
-      color: 'bg-gray-600',
+      color: 'bg-yellow-600',
       action: () => {
         const subject = `${cardName} - Happy Ethiopian New Year!`
         const body = `Wishing you a wonderful Enkutatash!\n\n${shareText}`
@@ -149,7 +150,7 @@ export default function ShareOptions({
     {
       name: 'Copy Link',
       icon: Copy,
-      color: 'bg-gray-500',
+      color: 'bg-yellow-500',
       action: async () => {
         try {
           await navigator.clipboard.writeText(shareUrl)
@@ -163,13 +164,13 @@ export default function ShareOptions({
     {
       name: 'QR Code',
       icon: QrCode,
-      color: 'bg-purple-500',
+      color: 'bg-yellow-700',
       action: generateQRCode
     },
     {
       name: 'Native Share',
       icon: Smartphone,
-      color: 'bg-indigo-500',
+      color: 'bg-yellow-800',
       action: handleNativeShare
     }
   ]
@@ -219,18 +220,16 @@ export default function ShareOptions({
               {socialMediaOptions.map((option, index) => (
                 <motion.button
                   key={option.name}
-                  className={`mobile-share-button flex flex-col items-center gap-1 md:gap-2 p-2 md:p-3 rounded-lg md:rounded-xl transition-all duration-200 ${option.color} text-white hover:opacity-90 mobile-touch-target`}
+                  className="mobile-share-button flex items-center justify-center p-3 md:p-4 rounded-lg md:rounded-xl transition-all duration-200 border-2 border-green-300 hover:border-green-500 bg-white hover:bg-green-50 mobile-touch-target"
                   onClick={option.action}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: index * 0.1 }}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
+                  title={option.name === 'Copy Link' && copied ? 'Copied!' : option.name}
                 >
-                  <option.icon className="mobile-share-icon w-4 h-4 md:w-5 md:h-5" />
-                  <span className="text-xs font-medium">
-                    {option.name === 'Copy Link' && copied ? 'Copied!' : option.name}
-                  </span>
+                  <option.icon className="mobile-share-icon w-5 h-5 md:w-6 md:h-6 text-gray-700" />
                 </motion.button>
               ))}
             </div>
@@ -243,7 +242,7 @@ export default function ShareOptions({
               {utilityOptions.map((option, index) => (
                 <motion.button
                   key={option.name}
-                  className={`mobile-share-button flex items-center gap-2 md:gap-3 p-2 md:p-3 rounded-lg md:rounded-xl transition-all duration-200 ${option.color} text-white hover:opacity-90 mobile-touch-target`}
+                  className="mobile-share-button flex flex-col items-center gap-1 md:gap-2 p-2 md:p-3 rounded-lg md:rounded-xl transition-all duration-200 border-2 border-green-300 hover:border-green-500 bg-white hover:bg-green-50 mobile-touch-target"
                   onClick={option.action}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -251,8 +250,8 @@ export default function ShareOptions({
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <option.icon className="mobile-share-icon w-4 h-4" />
-                  <span className="text-xs md:text-sm font-medium">
+                  <option.icon className="mobile-share-icon w-4 h-4 md:w-5 md:h-5 text-gray-700" />
+                  <span className="text-xs font-medium text-gray-700">
                     {option.name === 'Copy Link' && copied ? 'Copied!' : option.name}
                   </span>
                 </motion.button>
