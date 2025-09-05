@@ -16,15 +16,15 @@ export default function TemplatePicker({
 }: TemplatePickerProps) {
   return (
     <div className="space-y-4">
-      <h3 className="text-xl font-bold text-gray-800">Choose Template</h3>
+      <h3 className="text-xl font-bold text-green-800">Choose Template</h3>
       <div className="grid grid-cols-2 gap-4">
         {templates.map((template, index) => (
           <motion.div
             key={template.id}
             className={`template-card p-4 rounded-xl border-2 transition-all duration-300 ${
               selectedTemplate === template.id
-                ? 'border-ethiopian-red bg-red-50 shadow-lg'
-                : 'border-gray-200 bg-white hover:border-ethiopian-yellow'
+                ? 'border-green-500 bg-green-50 shadow-lg'
+                : 'border-green-200 bg-white hover:border-green-400'
             }`}
             onClick={() => onTemplateChange(template.id)}
             initial={{ opacity: 0, y: 20 }}
@@ -68,7 +68,7 @@ export default function TemplatePicker({
               {/* Selection indicator */}
               {selectedTemplate === template.id && (
                 <motion.div
-                  className="absolute top-2 right-2 w-6 h-6 bg-ethiopian-red rounded-full flex items-center justify-center"
+                  className="absolute top-2 right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ type: "spring", stiffness: 500, damping: 30 }}

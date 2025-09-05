@@ -181,19 +181,19 @@ export default function ShareOptions({
       <div className="mobile-controls flex flex-col sm:flex-row gap-2 md:gap-3">
         {/* Download Button */}
         <motion.button
-          className="mobile-control-button btn-primary flex items-center justify-center gap-2 mobile-button"
+          className="mobile-control-button bg-green-500 hover:bg-green-600 text-white flex items-center justify-center gap-2 mobile-button px-4 py-2 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
           onClick={onDownload}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           <Download className="w-4 h-4" />
-          <span className="hidden sm:inline">Download PNG</span>
+          <span className="hidden sm:inline">Download</span>
           <span className="sm:hidden">Download</span>
         </motion.button>
 
         {/* Share Menu Toggle */}
         <motion.button
-          className="mobile-control-button btn-secondary flex items-center justify-center gap-2 mobile-button"
+          className="mobile-control-button bg-green-600 hover:bg-green-700 text-white flex items-center justify-center gap-2 mobile-button px-4 py-2 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
           onClick={() => setShowShareMenu(!showShareMenu)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
