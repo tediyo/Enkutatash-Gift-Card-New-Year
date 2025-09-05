@@ -1,6 +1,6 @@
 'use client'
 
-import { forwardRef } from 'react'
+import React, { forwardRef } from 'react'
 import { GreetingCard, CardTemplate } from '@/app/page'
 import FlowerDecoration from './FlowerDecoration'
 
@@ -201,11 +201,35 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
 
       const templateConfig = getTemplateConfig(template.id)
 
-      return {
+      const finalStyle = {
         ...baseStyle,
         ...templateConfig
       }
+
+      // Debug logging
+      console.log('ExportableCard template style:', {
+        templateId: template.id,
+        background: template.background,
+        backgroundImage: finalStyle.backgroundImage,
+        backgroundColor: finalStyle.backgroundColor
+      })
+
+      return finalStyle
     }
+
+    // Preload the background image to ensure it's available
+    React.useEffect(() => {
+      if (template.background) {
+        const img = new Image()
+        img.src = template.background
+        img.onload = () => {
+          console.log('Background image loaded for export:', template.background)
+        }
+        img.onerror = () => {
+          console.error('Failed to load background image for export:', template.background)
+        }
+      }
+    }, [template.background])
 
     const getPatternStyle = (pattern: string) => {
     switch (pattern) {
@@ -343,30 +367,40 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
           // Ensure proper rendering for html2canvas
           transform: 'translateZ(0)',
           backfaceVisibility: 'hidden',
-          WebkitBackfaceVisibility: 'hidden'
+          WebkitBackfaceVisibility: 'hidden',
+          // Additional styles for better capture
+          opacity: 1,
+          visibility: 'visible',
+          display: 'block',
+          // Force background image to be visible
+          backgroundImage: `url(${template.background})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
         }}
         data-template={template.id}
         data-background={template.background}
+        id="exportable-card"
       >
-        {/* Decorative Elements - Template-based Flower Images + Emojis */}
+        {/* Static Decorative Elements - No animations for export */}
         <div className="absolute top-6 right-6">
-          <FlowerDecoration
-            src={template.background}
-            alt={`${template.name} Background`}
-            animation="rotate"
-            size="large"
-            opacity={0.8}
-          />
+          <div className="w-16 h-16 rounded-full overflow-hidden shadow-md opacity-80">
+            <img 
+              src={template.background} 
+              alt={`${template.name} Background`}
+              className="w-full h-full object-cover"
+            />
+          </div>
         </div>
         
         <div className="absolute top-6 left-6">
-          <FlowerDecoration
-            src={template.background}
-            alt={`${template.name} Background`}
-            animation="float"
-            size="large"
-            opacity={0.7}
-          />
+          <div className="w-16 h-16 rounded-full overflow-hidden shadow-md opacity-70">
+            <img 
+              src={template.background} 
+              alt={`${template.name} Background`}
+              className="w-full h-full object-cover"
+            />
+          </div>
         </div>
 
         <div className="absolute bottom-6 right-6">
@@ -376,23 +410,23 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
         </div>
 
         <div className="absolute bottom-6 left-6">
-          <FlowerDecoration
-            src={template.background}
-            alt={`${template.name} Background`}
-            animation="sway"
-            size="large"
-            opacity={0.6}
-          />
+          <div className="w-16 h-16 rounded-full overflow-hidden shadow-md opacity-60">
+            <img 
+              src={template.background} 
+              alt={`${template.name} Background`}
+              className="w-full h-full object-cover"
+            />
+          </div>
         </div>
 
         <div className="absolute top-1/2 left-6">
-          <FlowerDecoration
-            src={template.background}
-            alt={`${template.name} Background`}
-            animation="pulse"
-            size="medium"
-            opacity={0.5}
-          />
+          <div className="w-12 h-12 rounded-full overflow-hidden shadow-md opacity-50">
+            <img 
+              src={template.background} 
+              alt={`${template.name} Background`}
+              className="w-full h-full object-cover"
+            />
+          </div>
         </div>
 
         <div className="absolute top-1/2 right-6">
@@ -413,35 +447,35 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
           </div>
         </div>
 
-        {/* Additional flower decorations - Template-based */}
+        {/* Additional static flower decorations */}
         <div className="absolute top-1/3 right-1/4">
-          <FlowerDecoration
-            src={template.background}
-            alt={`${template.name} Background`}
-            animation="float"
-            size="small"
-            opacity={0.4}
-          />
+          <div className="w-8 h-8 rounded-full overflow-hidden shadow-md opacity-40">
+            <img 
+              src={template.background} 
+              alt={`${template.name} Background`}
+              className="w-full h-full object-cover"
+            />
+          </div>
         </div>
 
         <div className="absolute bottom-1/3 left-1/3">
-          <FlowerDecoration
-            src={template.background}
-            alt={`${template.name} Background`}
-            animation="scale"
-            size="small"
-            opacity={0.3}
-          />
+          <div className="w-8 h-8 rounded-full overflow-hidden shadow-md opacity-30">
+            <img 
+              src={template.background} 
+              alt={`${template.name} Background`}
+              className="w-full h-full object-cover"
+            />
+          </div>
         </div>
 
         <div className="absolute top-1/4 left-1/4">
-          <FlowerDecoration
-            src={template.background}
-            alt={`${template.name} Background`}
-            animation="pulse"
-            size="small"
-            opacity={0.2}
-          />
+          <div className="w-8 h-8 rounded-full overflow-hidden shadow-md opacity-20">
+            <img 
+              src={template.background} 
+              alt={`${template.name} Background`}
+              className="w-full h-full object-cover"
+            />
+          </div>
         </div>
 
         {/* Semi-transparent overlay for text readability */}

@@ -154,6 +154,15 @@ export default function Home() {
 
   const selectedTemplate = templates.find(t => t.id === currentCard.template) || templates[0]
 
+  const preloadImage = (src: string): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image()
+      img.onload = () => resolve()
+      img.onerror = () => reject(new Error(`Failed to load image: ${src}`))
+      img.src = src
+    })
+  }
+
   const handleDownload = async () => {
     if (!exportableCardRef.current) {
       alert('Card preview not ready. Please wait a moment and try again.')
@@ -164,8 +173,22 @@ export default function Home() {
     try {
       console.log('Starting card export...')
       
-      // Wait a bit to ensure the card is fully rendered
-      await new Promise(resolve => setTimeout(resolve, 500))
+      // Preload the background image to ensure it's available
+      const selectedTemplate = templates.find(t => t.id === currentCard.template) || templates[0]
+      if (selectedTemplate.background) {
+        try {
+          await preloadImage(selectedTemplate.background)
+          console.log('Background image preloaded successfully')
+          
+          // Additional wait to ensure the image is fully rendered
+          await new Promise(resolve => setTimeout(resolve, 500))
+        } catch (error) {
+          console.warn('Failed to preload background image:', error)
+        }
+      }
+      
+      // Wait longer to ensure background images are fully loaded
+      await new Promise(resolve => setTimeout(resolve, 1500))
       
       let dataUrl: string
       

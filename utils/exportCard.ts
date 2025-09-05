@@ -26,9 +26,47 @@ export const exportCard = async (
   element.style.visibility = 'visible'
   element.style.position = 'static'
 
+  // Ensure the element is properly visible and styled
+ // element.style.display = 'block'
+  element.style.visibility = 'visible'
+  element.style.position = 'static'
+  element.style.opacity = '1'
+  element.style.transform = 'none'
+  element.style.zIndex = '9999'
+  
+  // Force a reflow to ensure styles are applied
+  element.offsetHeight
+
+  // Ensure background image is fully loaded
+  const backgroundUrl = element.getAttribute('data-background')
+  if (backgroundUrl) {
+    try {
+      await new Promise((resolve, reject) => {
+        const img = new Image()
+        img.crossOrigin = 'anonymous'
+        img.onload = () => {
+          console.log('Background image loaded successfully:', backgroundUrl)
+          resolve(true)
+        }
+        img.onerror = () => {
+          console.warn('Failed to load background image:', backgroundUrl)
+          resolve(false) // Don't reject, just continue
+        }
+        img.src = backgroundUrl
+      })
+    } catch (error) {
+      console.warn('Error preloading background image:', error)
+    }
+  }
+
+  // Wait for background images to load
+  await new Promise(resolve => setTimeout(resolve, 1000))
+
   try {
+    console.log('🚀 Starting simple html2canvas export...')
+    
     const canvas = await html2canvas(element, {
-      backgroundColor: '#000000', // White background for better compatibility
+      backgroundColor: null, // Keep original background
       scale: 2, // Higher resolution
       useCORS: true,
       allowTaint: true,
@@ -38,8 +76,14 @@ export const exportCard = async (
       scrollX: 0,
       scrollY: 0,
       windowWidth: element.offsetWidth,
-      windowHeight: element.offsetHeight
+      windowHeight: element.offsetHeight,
+      imageTimeout: 30000, // Increase timeout for images to load
+      removeContainer: false, // Keep container for proper rendering
+      foreignObjectRendering: false, // Disable this as it can cause issues
     })
+
+    console.log('✅ html2canvas export completed')
+    console.log('📊 Canvas dimensions:', canvas.width, 'x', canvas.height)
 
     // Restore original styles
     element.style.display = originalDisplay
@@ -47,6 +91,11 @@ export const exportCard = async (
     element.style.position = originalPosition
 
     const dataUrl = canvas.toDataURL(`image/${options.format}`, options.quality)
+    
+    // Debug: Log canvas dimensions and data URL info
+    console.log('📊 Final canvas dimensions:', canvas.width, 'x', canvas.height)
+    console.log('📄 Data URL length:', dataUrl.length)
+    console.log('🔗 Data URL preview:', dataUrl.substring(0, 100) + '...')
     
     // Validate the data URL
     if (!dataUrl || dataUrl === 'data:,') {
