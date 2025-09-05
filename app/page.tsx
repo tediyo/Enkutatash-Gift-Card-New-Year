@@ -165,7 +165,7 @@ export default function Home() {
 
   const handleDownload = async () => {
     if (!exportableCardRef.current) {
-      alert('Card preview not ready. Please wait a moment and try again.')
+      console.warn('Card preview not ready. Please wait a moment and try again.')
       return
     }
     
@@ -227,17 +227,17 @@ export default function Home() {
       // Update card data URL for sharing
       setCardDataUrl(dataUrl)
       
-      // Show success message
-      alert('Card downloaded successfully! Check your downloads folder.')
+      console.log('Card downloaded successfully!')
       
     } catch (error) {
       console.error('Error downloading card:', error)
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
-      alert(`Failed to download card: ${errorMessage}\n\nPlease try again or check the browser console for more details.`)
+      console.error(`Failed to download card: ${errorMessage}`)
     } finally {
       setIsGenerating(false)
     }
   }
+
 
   return (
     <div className="min-h-screen cultural-pattern">

@@ -27,7 +27,6 @@ export const exportCard = async (
   element.style.position = 'static'
 
   // Ensure the element is properly visible and styled
- // element.style.display = 'block'
   element.style.visibility = 'visible'
   element.style.position = 'static'
   element.style.opacity = '1'
