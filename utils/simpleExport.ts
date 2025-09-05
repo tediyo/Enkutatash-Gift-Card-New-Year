@@ -46,9 +46,7 @@ export const simpleExportCard = async (element: HTMLElement): Promise<string> =>
       allowTaint: true,
       logging: false,
       width: element.offsetWidth,
-      height: element.offsetHeight,
-      pixelRatio: window.devicePixelRatio || 1,
-      letterRendering: true
+      height: element.offsetHeight
     })
 
     return canvasResult.toDataURL('image/png', 1)

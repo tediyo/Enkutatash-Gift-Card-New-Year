@@ -79,8 +79,6 @@ export const exportCard = async (
       imageTimeout: 30000, // Increase timeout for images to load
       removeContainer: false, // Keep container for proper rendering
       foreignObjectRendering: false, // Disable this as it can cause issues
-      pixelRatio: window.devicePixelRatio || 1, // Use device pixel ratio for crisp images
-      letterRendering: true, // Better text rendering
       onclone: (clonedDoc) => {
         // Ensure fonts are loaded in cloned document
         const clonedElement = clonedDoc.getElementById(element.id)
