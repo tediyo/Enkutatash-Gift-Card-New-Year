@@ -11,6 +11,32 @@
   body {
     @apply bg-gradient-to-br from-ethiopian-yellow via-meskel-gold to-cultural-orange min-h-screen;
   }
+  
+  /* Custom Green Scrollbar */
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 6px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #10b981;
+    border-radius: 6px;
+    border: 2px solid #f1f5f9;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #059669;
+  }
+  
+  /* Firefox scrollbar */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #10b981 #f1f5f9;
+  }
 }
 
 @layer components {

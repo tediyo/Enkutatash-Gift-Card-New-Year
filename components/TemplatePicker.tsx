@@ -68,7 +68,7 @@ export default function TemplatePicker({
               {/* Selection indicator */}
               {selectedTemplate === template.id && (
                 <motion.div
-                  className="absolute top-2 right-2 w-6 h-6 bg-ethiopian-red rounded-full flex items-center justify-center"
+                  className="absolute top-2 right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center"
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ type: "spring", stiffness: 500, damping: 30 }}

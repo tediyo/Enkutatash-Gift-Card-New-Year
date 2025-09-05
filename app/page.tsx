@@ -400,7 +400,7 @@ export default function Home() {
           exit={{ opacity: 0 }}
         >
           <motion.div 
-            className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-8 max-w-4xl w-full max-h-[95vh] md:max-h-[90vh] overflow-y-auto mobile-modal-content border-4 border-green-500 shadow-lg shadow-green-500/25"
+            className="bg-white rounded-2xl md:rounded-1xl p-4 md:p-8 max-w-4xl w-full max-h-[95vh] md:max-h-[90vh] overflow-y-auto mobile-modal-content border-4 border-green-500 shadow-3lg shadow-green-500/25"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
