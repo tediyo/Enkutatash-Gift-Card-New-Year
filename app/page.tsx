@@ -337,7 +337,7 @@ export default function Home() {
 
         <div className="relative z-10 container mx-auto px-4 py-8 md:py-16 text-center">
           <motion.h1 
-            className="mobile-hero-title text-6xl md:text-8xl font-bold text-white text-shadow-lg mb-4 md:mb-6"
+            className="mobile-hero-title text-6xl md:text-8xl font-bold text-white text-shadow-lg mb-2 md:mb-3"
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -345,8 +345,17 @@ export default function Home() {
             Enkutatash
           </motion.h1>
           
+          <motion.h2 
+            className="mobile-hero-title text-4xl md:text-6xl font-bold text-green-400 text-shadow-lg mb-4 md:mb-6 font-amharic"
+            initial={{ y: -30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+          >
+            እንኳንታታሽ
+          </motion.h2>
+          
           <motion.p 
-            className="mobile-hero-subtitle text-2xl md:text-3xl text-white text-shadow mb-2 md:mb-4 font-amharic"
+            className="mobile-hero-subtitle text-2xl md:text-3xl text-green-400 text-shadow mb-2 md:mb-4 font-amharic"
             initial={{ y: -30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -354,14 +363,7 @@ export default function Home() {
             እንኳን ለአዲሱ ዓመት በዓል አደረሰዎ!
           </motion.p>
           
-          <motion.p 
-            className="mobile-hero-description text-lg md:text-xl text-white text-shadow mb-6 md:mb-8"
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            Create beautiful Ethiopian New Year greeting cards
-          </motion.p>
+          
 
           {/* Countdown Timer */}
           <motion.div
@@ -374,7 +376,7 @@ export default function Home() {
 
           {/* CTA Button */}
           <motion.button
-            className="mobile-hero-cta btn-primary text-lg md:text-xl px-6 md:px-8 py-3 md:py-4 mt-6 md:mt-8 flex items-center gap-2 md:gap-3 mx-auto mobile-button"
+            className="mobile-hero-cta bg-green-500 hover:bg-green-600 text-white text-lg md:text-xl px-6 md:px-8 py-3 md:py-4 mt-6 md:mt-8 flex items-center gap-2 md:gap-3 mx-auto mobile-button rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
             onClick={() => setShowCardCreator(true)}
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
@@ -398,7 +400,7 @@ export default function Home() {
           exit={{ opacity: 0 }}
         >
           <motion.div 
-            className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-8 max-w-4xl w-full max-h-[95vh] md:max-h-[90vh] overflow-y-auto mobile-modal-content"
+            className="bg-white rounded-2xl md:rounded-3xl p-4 md:p-8 max-w-4xl w-full max-h-[95vh] md:max-h-[90vh] overflow-y-auto mobile-modal-content border-4 border-green-500 shadow-lg shadow-green-500/25"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
