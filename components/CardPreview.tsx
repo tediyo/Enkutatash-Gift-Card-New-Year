@@ -469,7 +469,7 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
           <motion.div
             className="text-lg font-amharic mb-4 text-shadow"
             style={{ 
-              color: getTemplateConfig(template.id).accentColor,
+              color: card.amharicTextColor || getTemplateConfig(template.id).accentColor,
               fontFamily: getTemplateConfig(template.id).fontFamily,
               textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
             }}
@@ -485,7 +485,7 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
         <motion.div
           className="text-xl font-bold mb-4 text-shadow"
           style={{ 
-            color: getTemplateConfig(template.id).textColor,
+            color: card.textColor || getTemplateConfig(template.id).textColor,
             fontFamily: getTemplateConfig(template.id).fontFamily,
             textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
           }}
@@ -501,7 +501,7 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
           <motion.div
             className="text-lg font-semibold text-shadow"
             style={{ 
-              color: getTemplateConfig(template.id).accentColor,
+              color: card.nameTextColor || getTemplateConfig(template.id).accentColor,
               fontFamily: getTemplateConfig(template.id).fontFamily,
               textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
             }}
