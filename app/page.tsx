@@ -31,31 +31,73 @@ export interface CardTemplate {
 const templates: CardTemplate[] = [
   {
     id: 'meskel-flowers',
-    name: 'Meskel Flowers',
-    preview: '🌺',
-    background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF6B35 100%)',
+    name: 'Meskel Daisies',
+    preview: '🌼',
+    background: '/images/flowers/backgrounds/EF.jpg',
     pattern: 'meskel'
   },
   {
-    id: 'cultural-pattern',
-    name: 'Cultural Pattern',
-    preview: '🏛️',
-    background: 'linear-gradient(135deg, #DA1212 0%, #FCDD09 50%, #078930 100%)',
-    pattern: 'cultural'
+    id: 'yellow-garden',
+    name: 'Yellow Garden',
+    preview: '🌻',
+    background: '/images/flowers/backgrounds/EF5.jpg',
+    pattern: 'garden'
   },
   {
     id: 'golden-sunrise',
     name: 'Golden Sunrise',
-    preview: '☀️',
-    background: 'linear-gradient(135deg, #FF6B35 0%, #FCDD09 100%)',
+    preview: '🌅',
+    background: '/images/flowers/backgrounds/FR3.jpg',
     pattern: 'sunrise'
   },
   {
-    id: 'ethiopian-flag',
-    name: 'Ethiopian Pride',
-    preview: '🇪🇹',
-    background: 'linear-gradient(135deg, #078930 0%, #FCDD09 25%, #DA1212 50%, #FCDD09 75%, #078930 100%)',
-    pattern: 'flag'
+    id: 'ethiopian-spring',
+    name: 'Ethiopian Spring',
+    preview: '🌸',
+    background: '/images/flowers/backgrounds/FW2.webp',
+    pattern: 'spring'
+  },
+  {
+    id: 'classic-meskel',
+    name: 'Classic Meskel',
+    preview: '🌺',
+    background: '/images/flowers/backgrounds/F4.jpg',
+    pattern: 'classic'
+  },
+  {
+    id: 'vibrant-garden',
+    name: 'Vibrant Garden',
+    preview: '🌻',
+    background: '/images/flowers/backgrounds/f5.jpg',
+    pattern: 'vibrant'
+  },
+  {
+    id: 'sunset-bloom',
+    name: 'Sunset Bloom',
+    preview: '🌅',
+    background: '/images/flowers/backgrounds/f6.jpg',
+    pattern: 'sunset'
+  },
+  {
+    id: 'spring-celebration',
+    name: 'Spring Celebration',
+    preview: '🌸',
+    background: '/images/flowers/backgrounds/f7.jpg',
+    pattern: 'celebration'
+  },
+  {
+    id: 'floral-elegance',
+    name: 'Floral Elegance',
+    preview: '🌹',
+    background: '/images/flowers/backgrounds/f8.jpg',
+    pattern: 'elegance'
+  },
+  {
+    id: 'blooming-garden',
+    name: 'Blooming Garden',
+    preview: '🌺',
+    background: '/images/flowers/backgrounds/f9.jpg',
+    pattern: 'blooming'
   }
 ]
 
@@ -80,6 +122,9 @@ export default function Home() {
   const exportableCardRef = useRef<HTMLDivElement>(null)
 
   const handleTemplateChange = (templateId: string) => {
+    console.log('Template changing to:', templateId)
+    const newTemplate = templates.find(t => t.id === templateId)
+    console.log('New template data:', newTemplate)
     setCurrentCard(prev => ({
       ...prev,
       template: templateId
@@ -109,6 +154,15 @@ export default function Home() {
 
   const selectedTemplate = templates.find(t => t.id === currentCard.template) || templates[0]
 
+  const preloadImage = (src: string): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image()
+      img.onload = () => resolve()
+      img.onerror = () => reject(new Error(`Failed to load image: ${src}`))
+      img.src = src
+    })
+  }
+
   const handleDownload = async () => {
     if (!exportableCardRef.current) {
       alert('Card preview not ready. Please wait a moment and try again.')
@@ -119,8 +173,22 @@ export default function Home() {
     try {
       console.log('Starting card export...')
       
-      // Wait a bit to ensure the card is fully rendered
-      await new Promise(resolve => setTimeout(resolve, 500))
+      // Preload the background image to ensure it's available
+      const selectedTemplate = templates.find(t => t.id === currentCard.template) || templates[0]
+      if (selectedTemplate.background) {
+        try {
+          await preloadImage(selectedTemplate.background)
+          console.log('Background image preloaded successfully')
+          
+          // Additional wait to ensure the image is fully rendered
+          await new Promise(resolve => setTimeout(resolve, 500))
+        } catch (error) {
+          console.warn('Failed to preload background image:', error)
+        }
+      }
+      
+      // Wait longer to ensure background images are fully loaded
+      await new Promise(resolve => setTimeout(resolve, 1500))
       
       let dataUrl: string
       
@@ -180,28 +248,63 @@ export default function Home() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        {/* Background Elements */}
+        {/* Background Elements - Ethiopian New Year Emojis */}
         <div className="absolute inset-0 overflow-hidden">
           <motion.div
-            className="absolute top-10 left-10 text-6xl opacity-20"
+            className="absolute top-10 left-10 text-6xl opacity-30"
             animate={{ rotate: 360 }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          >
+            🎉
+          </motion.div>
+          <motion.div
+            className="absolute top-20 right-20 text-5xl opacity-40"
+            animate={{ y: [-10, 10, -10] }}
+            transition={{ duration: 3, repeat: Infinity }}
           >
             🌺
           </motion.div>
           <motion.div
-            className="absolute top-20 right-20 text-4xl opacity-30"
-            animate={{ y: [-10, 10, -10] }}
-            transition={{ duration: 3, repeat: Infinity }}
-          >
-            ⭐
-          </motion.div>
-          <motion.div
-            className="absolute bottom-20 left-1/4 text-5xl opacity-25"
+            className="absolute bottom-20 left-1/4 text-6xl opacity-35"
             animate={{ x: [-20, 20, -20] }}
             transition={{ duration: 4, repeat: Infinity }}
           >
+            🎊
+          </motion.div>
+          <motion.div
+            className="absolute top-1/2 right-1/4 text-4xl opacity-25"
+            animate={{ scale: [0.8, 1.2, 0.8] }}
+            transition={{ duration: 5, repeat: Infinity }}
+          >
             🌸
+          </motion.div>
+          <motion.div
+            className="absolute bottom-1/3 right-10 text-3xl opacity-30"
+            animate={{ rotate: [0, 15, -15, 0] }}
+            transition={{ duration: 6, repeat: Infinity }}
+          >
+            🌻
+          </motion.div>
+          <motion.div
+            className="absolute top-1/3 left-1/3 text-4xl opacity-20"
+            animate={{ y: [-15, 15, -15] }}
+            transition={{ duration: 4.5, repeat: Infinity }}
+          >
+            🍃
+          </motion.div>
+          <motion.div
+            className="absolute top-1/2 left-1/2 text-3xl opacity-25"
+            animate={{ scale: [1, 1.3, 1] }}
+            transition={{ duration: 3.5, repeat: Infinity }}
+          >
+            👑
+          </motion.div>
+          <motion.div
+            className="absolute bottom-1/2 right-1/3 text-2xl opacity-30"
+            animate={{ y: [-8, 8, -8] }}
+            transition={{ duration: 4, repeat: Infinity }}
+          >
+            🥂
           </motion.div>
         </div>
 
@@ -325,6 +428,7 @@ export default function Home() {
               {/* Right Side - Preview */}
               <div className="flex flex-col items-center gap-6">
                 <CardPreview
+                  key={`preview-${currentCard.template}`}
                   card={currentCard}
                   template={selectedTemplate}
                 />
@@ -332,6 +436,7 @@ export default function Home() {
                 {/* Hidden exportable card for download */}
                 <div id="exportable-card" className="hidden">
                   <ExportableCard
+                    key={`export-${currentCard.template}`}
                     ref={exportableCardRef}
                     card={currentCard}
                     template={selectedTemplate}

@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Heart, Star, Flower } from 'lucide-react'
 import { GreetingCard, CardTemplate } from '@/app/page'
+import FlowerDecoration from './FlowerDecoration'
 
 interface CardPreviewProps {
   card: GreetingCard
@@ -10,47 +11,322 @@ interface CardPreviewProps {
 }
 
 export default function CardPreview({ card, template }: CardPreviewProps) {
+  // Debug logging
+  console.log('CardPreview template:', template.id, template.background)
+  console.log('CardPreview background URL:', `url(${template.background})`)
+  const getTemplateStyle = (template: CardTemplate) => {
+    const baseStyle = {
+      backgroundImage: `url(${template.background})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+      backgroundRepeat: 'no-repeat',
+      backgroundColor: '#f0f0f0'
+    }
+
+    const templateConfig = getTemplateConfig(template.id)
+
+    return {
+      ...baseStyle,
+      ...templateConfig
+    }
+  }
+
+  const getBorderConfig = (templateId: string) => {
+    switch (templateId) {
+      case 'meskel-flowers':
+        return {
+          borderColor: '#FF6B35',
+          borderWidth: '3px',
+          borderStyle: 'solid',
+          borderRadius: '16px',
+          boxShadow: '0 0 20px rgba(255, 107, 53, 0.3), inset 0 0 20px rgba(255, 107, 53, 0.1)'
+        }
+      case 'yellow-garden':
+        return {
+          borderColor: '#FFD700',
+          borderWidth: '4px',
+          borderStyle: 'double',
+          borderRadius: '20px',
+          boxShadow: '0 0 25px rgba(255, 215, 0, 0.4), inset 0 0 25px rgba(255, 215, 0, 0.1)'
+        }
+      case 'golden-sunrise':
+        return {
+          borderColor: '#FF8C00',
+          borderWidth: '3px',
+          borderStyle: 'solid',
+          borderRadius: '24px',
+          boxShadow: '0 0 30px rgba(255, 140, 0, 0.5), inset 0 0 30px rgba(255, 140, 0, 0.1)'
+        }
+      case 'ethiopian-spring':
+        return {
+          borderColor: '#FF6347',
+          borderWidth: '2px',
+          borderStyle: 'solid',
+          borderRadius: '18px',
+          boxShadow: '0 0 15px rgba(255, 99, 71, 0.3), inset 0 0 15px rgba(255, 99, 71, 0.1)'
+        }
+      case 'classic-meskel':
+        return {
+          borderColor: '#CD853F',
+          borderWidth: '5px',
+          borderStyle: 'groove',
+          borderRadius: '12px',
+          boxShadow: '0 0 35px rgba(205, 133, 63, 0.4), inset 0 0 35px rgba(205, 133, 63, 0.1)'
+        }
+      case 'vibrant-garden':
+        return {
+          borderColor: '#FF4500',
+          borderWidth: '4px',
+          borderStyle: 'solid',
+          borderRadius: '28px',
+          boxShadow: '0 0 40px rgba(255, 69, 0, 0.6), inset 0 0 40px rgba(255, 69, 0, 0.1)'
+        }
+      case 'sunset-bloom':
+        return {
+          borderColor: '#FF7F50',
+          borderWidth: '3px',
+          borderStyle: 'ridge',
+          borderRadius: '22px',
+          boxShadow: '0 0 25px rgba(255, 127, 80, 0.4), inset 0 0 25px rgba(255, 127, 80, 0.1)'
+        }
+      case 'spring-celebration':
+        return {
+          borderColor: '#FF1493',
+          borderWidth: '6px',
+          borderStyle: 'double',
+          borderRadius: '32px',
+          boxShadow: '0 0 45px rgba(255, 20, 147, 0.5), inset 0 0 45px rgba(255, 20, 147, 0.1)'
+        }
+      case 'elegance':
+        return {
+          borderColor: '#DA70D6',
+          borderWidth: '3px',
+          borderStyle: 'solid',
+          borderRadius: '20px',
+          boxShadow: '0 0 25px rgba(218, 112, 214, 0.4), inset 0 0 25px rgba(218, 112, 214, 0.1)'
+        }
+      case 'blooming':
+        return {
+          borderColor: '#32CD32',
+          borderWidth: '4px',
+          borderStyle: 'solid',
+          borderRadius: '26px',
+          boxShadow: '0 0 30px rgba(50, 205, 50, 0.4), inset 0 0 30px rgba(50, 205, 50, 0.1)'
+        }
+      default:
+        return {
+          borderColor: '#FF6B35',
+          borderWidth: '3px',
+          borderStyle: 'solid',
+          borderRadius: '16px',
+          boxShadow: '0 0 20px rgba(255, 107, 53, 0.3), inset 0 0 20px rgba(255, 107, 53, 0.1)'
+        }
+    }
+  }
+
+  const getTemplateConfig = (templateId: string) => {
+    switch (templateId) {
+      case 'meskel-flowers':
+        return {
+          fontFamily: "'Playfair Display', serif",
+          textColor: '#8B4513',
+          accentColor: '#FF6B35',
+          backgroundColor: '#FFF8DC'
+        }
+      case 'yellow-garden':
+        return {
+          fontFamily: "'Dancing Script', cursive",
+          textColor: '#2F4F2F',
+          accentColor: '#FFD700',
+          backgroundColor: '#F0FFF0'
+        }
+      case 'golden-sunrise':
+        return {
+          fontFamily: "'Pacifico', cursive",
+          textColor: '#8B4513',
+          accentColor: '#FF8C00',
+          backgroundColor: '#FFFACD'
+        }
+      case 'ethiopian-spring':
+        return {
+          fontFamily: "'Lobster', cursive",
+          textColor: '#228B22',
+          accentColor: '#FF6347',
+          backgroundColor: '#F0F8FF'
+        }
+      case 'classic-meskel':
+        return {
+          fontFamily: "'Cinzel', serif",
+          textColor: '#B8860B',
+          accentColor: '#CD853F',
+          backgroundColor: '#F5F5DC'
+        }
+      case 'vibrant-garden':
+        return {
+          fontFamily: "'Fredoka One', cursive",
+          textColor: '#8B0000',
+          accentColor: '#FF4500',
+          backgroundColor: '#FFE4B5'
+        }
+      case 'sunset-bloom':
+        return {
+          fontFamily: "'Righteous', cursive",
+          textColor: '#8B4513',
+          accentColor: '#FF7F50',
+          backgroundColor: '#FFEBCD'
+        }
+      case 'spring-celebration':
+        return {
+          fontFamily: "'Bungee', cursive",
+          textColor: '#2E8B57',
+          accentColor: '#FF1493',
+          backgroundColor: '#F0FFFF'
+        }
+      case 'floral-elegance':
+        return {
+          fontFamily: "'Playfair Display', serif",
+          textColor: '#8B008B',
+          accentColor: '#DA70D6',
+          backgroundColor: '#F8F8FF'
+        }
+      case 'blooming-garden':
+        return {
+          fontFamily: "'Dancing Script', cursive",
+          textColor: '#006400',
+          accentColor: '#32CD32',
+          backgroundColor: '#F0FFF0'
+        }
+      default:
+        return {
+          fontFamily: "'Playfair Display', serif",
+          textColor: '#8B4513',
+          accentColor: '#FF6B35',
+          backgroundColor: '#FFF8DC'
+        }
+    }
+  }
+
   const getPatternStyle = (pattern: string) => {
     switch (pattern) {
       case 'meskel':
         return {
           backgroundImage: `
-            radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.3) 2px, transparent 2px),
-            radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.2) 1px, transparent 1px),
-            radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.1) 3px, transparent 3px)
+            radial-gradient(circle at 15% 15%, rgba(255, 81, 7, 0.98) 8px, transparent 8px),
+            radial-gradient(circle at 85% 25%, rgba(255, 215, 0, 0.6) 6px, transparent 6px),
+            radial-gradient(circle at 25% 75%, rgba(255, 140, 0, 0.4) 10px, transparent 10px),
+            radial-gradient(circle at 75% 85%, rgba(255, 165, 0, 0.5) 7px, transparent 7px),
+            radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 12px, transparent 12px)
           `,
-          backgroundSize: '30px 30px, 20px 20px, 40px 40px'
+          backgroundSize: '60px 60px, 45px 45px, 70px 70px, 50px 50px, 80px 80px',
+          backgroundColor: '#000000'
         }
-      case 'cultural':
+      case 'garden':
         return {
           backgroundImage: `
-            linear-gradient(45deg, transparent 25%, rgba(255, 255, 255, 0.1) 25%),
-            linear-gradient(-45deg, transparent 25%, rgba(255, 255, 255, 0.1) 25%),
-            linear-gradient(45deg, rgba(255, 255, 255, 0.1) 75%, transparent 75%),
-            linear-gradient(-45deg, rgba(255, 255, 255, 0.1) 75%, transparent 75%)
+            radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.4) 5px, transparent 5px),
+            radial-gradient(circle at 80% 30%, rgba(255, 140, 0, 0.3) 7px, transparent 7px),
+            radial-gradient(circle at 30% 80%, rgba(255, 165, 0, 0.35) 6px, transparent 6px),
+            radial-gradient(circle at 70% 70%, rgba(255, 255, 0, 0.25) 8px, transparent 8px),
+            linear-gradient(45deg, transparent 40%, rgba(255, 215, 0, 0.2) 40%, rgba(255, 140, 0, 0.2) 60%, transparent 60%)
           `,
-          backgroundSize: '20px 20px',
-          backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px'
+          backgroundSize: '40px 40px, 55px 55px, 45px 45px, 60px 60px, 25px 25px'
         }
       case 'sunrise':
         return {
           backgroundImage: `
-            radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.3) 0%, transparent 50%),
-            linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.1) 30%, rgba(255, 255, 255, 0.1) 70%, transparent 70%)
+            radial-gradient(circle at 50% 0%, rgba(255, 215, 0, 0.5) 0%, transparent 60%),
+            radial-gradient(circle at 20% 40%, rgba(255, 140, 0, 0.3) 6px, transparent 6px),
+            radial-gradient(circle at 80% 60%, rgba(255, 165, 0, 0.35) 8px, transparent 8px),
+            linear-gradient(45deg, transparent 30%, rgba(255, 215, 0, 0.2) 30%, rgba(255, 140, 0, 0.2) 70%, transparent 70%)
           `,
-          backgroundSize: '100% 100%, 15px 15px'
+          backgroundSize: '100% 100%, 50px 50px, 60px 60px, 20px 20px'
         }
-      case 'flag':
+      case 'spring':
         return {
           backgroundImage: `
-            repeating-linear-gradient(
-              0deg,
-              transparent,
-              transparent 2px,
-              rgba(255, 255, 255, 0.1) 2px,
-              rgba(255, 255, 255, 0.1) 4px
-            )
-          `
+            radial-gradient(circle at 10% 10%, rgba(255, 215, 0, 0.4) 6px, transparent 6px),
+            radial-gradient(circle at 90% 20%, rgba(255, 140, 0, 0.3) 8px, transparent 8px),
+            radial-gradient(circle at 20% 90%, rgba(255, 165, 0, 0.35) 7px, transparent 7px),
+            radial-gradient(circle at 80% 80%, rgba(255, 255, 0, 0.25) 9px, transparent 9px),
+            radial-gradient(circle at 50% 30%, rgba(255, 215, 0, 0.2) 10px, transparent 10px),
+            radial-gradient(circle at 30% 60%, rgba(255, 140, 0, 0.3) 5px, transparent 5px)
+          `,
+          backgroundSize: '45px 45px, 55px 55px, 50px 50px, 65px 65px, 70px 70px, 40px 40px'
+        }
+      case 'classic':
+        return {
+          backgroundImage: `
+            radial-gradient(circle at 25% 25%, rgba(255, 81, 7, 0.8) 10px, transparent 10px),
+            radial-gradient(circle at 75% 25%, rgba(255, 215, 0, 0.6) 8px, transparent 8px),
+            radial-gradient(circle at 25% 75%, rgba(255, 140, 0, 0.7) 12px, transparent 12px),
+            radial-gradient(circle at 75% 75%, rgba(255, 165, 0, 0.5) 9px, transparent 9px),
+            radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 15px, transparent 15px)
+          `,
+          backgroundSize: '80px 80px, 60px 60px, 90px 90px, 70px 70px, 100px 100px',
+          backgroundColor: '#1a1a1a'
+        }
+      case 'vibrant':
+        return {
+          backgroundImage: `
+            radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.6) 6px, transparent 6px),
+            radial-gradient(circle at 80% 20%, rgba(255, 140, 0, 0.5) 8px, transparent 8px),
+            radial-gradient(circle at 20% 80%, rgba(255, 165, 0, 0.7) 7px, transparent 7px),
+            radial-gradient(circle at 80% 80%, rgba(255, 255, 0, 0.4) 9px, transparent 9px),
+            linear-gradient(30deg, transparent 30%, rgba(255, 215, 0, 0.3) 30%, rgba(255, 140, 0, 0.3) 70%, transparent 70%)
+          `,
+          backgroundSize: '50px 50px, 65px 65px, 55px 55px, 75px 75px, 30px 30px',
+          backgroundColor: '#2d1b00'
+        }
+      case 'sunset':
+        return {
+          backgroundImage: `
+            radial-gradient(circle at 50% 0%, rgba(255, 140, 0, 0.6) 0%, transparent 70%),
+            radial-gradient(circle at 30% 30%, rgba(255, 215, 0, 0.4) 8px, transparent 8px),
+            radial-gradient(circle at 70% 70%, rgba(255, 165, 0, 0.5) 10px, transparent 10px),
+            radial-gradient(circle at 20% 80%, rgba(255, 81, 7, 0.3) 6px, transparent 6px),
+            linear-gradient(60deg, transparent 40%, rgba(255, 140, 0, 0.2) 40%, rgba(255, 215, 0, 0.2) 60%, transparent 60%)
+          `,
+          backgroundSize: '100% 100%, 60px 60px, 80px 80px, 50px 50px, 25px 25px',
+          backgroundColor: '#1a0f00'
+        }
+      case 'celebration':
+        return {
+          backgroundImage: `
+            radial-gradient(circle at 15% 15%, rgba(255, 215, 0, 0.5) 8px, transparent 8px),
+            radial-gradient(circle at 85% 15%, rgba(255, 140, 0, 0.4) 10px, transparent 10px),
+            radial-gradient(circle at 15% 85%, rgba(255, 165, 0, 0.6) 7px, transparent 7px),
+            radial-gradient(circle at 85% 85%, rgba(255, 255, 0, 0.3) 9px, transparent 9px),
+            radial-gradient(circle at 50% 20%, rgba(255, 81, 7, 0.4) 6px, transparent 6px),
+            radial-gradient(circle at 50% 80%, rgba(255, 215, 0, 0.5) 8px, transparent 8px),
+            linear-gradient(45deg, transparent 25%, rgba(255, 140, 0, 0.2) 25%, rgba(255, 215, 0, 0.2) 75%, transparent 75%)
+          `,
+          backgroundSize: '70px 70px, 85px 85px, 65px 65px, 90px 90px, 55px 55px, 75px 75px, 35px 35px',
+          backgroundColor: '#0d0d0d'
+        }
+      case 'elegance':
+        return {
+          backgroundImage: `
+            radial-gradient(circle at 20% 20%, rgba(218, 112, 214, 0.4) 6px, transparent 6px),
+            radial-gradient(circle at 80% 30%, rgba(147, 0, 211, 0.3) 8px, transparent 8px),
+            radial-gradient(circle at 30% 80%, rgba(186, 85, 211, 0.35) 7px, transparent 7px),
+            radial-gradient(circle at 70% 70%, rgba(221, 160, 221, 0.25) 9px, transparent 9px),
+            linear-gradient(30deg, transparent 30%, rgba(218, 112, 214, 0.2) 30%, rgba(147, 0, 211, 0.2) 70%, transparent 70%)
+          `,
+          backgroundSize: '50px 50px, 65px 65px, 55px 55px, 75px 75px, 30px 30px',
+          backgroundColor: '#1a0a1a'
+        }
+      case 'blooming':
+        return {
+          backgroundImage: `
+            radial-gradient(circle at 25% 25%, rgba(50, 205, 50, 0.5) 8px, transparent 8px),
+            radial-gradient(circle at 75% 25%, rgba(34, 139, 34, 0.4) 10px, transparent 10px),
+            radial-gradient(circle at 25% 75%, rgba(0, 100, 0, 0.6) 7px, transparent 7px),
+            radial-gradient(circle at 75% 75%, rgba(144, 238, 144, 0.3) 9px, transparent 9px),
+            radial-gradient(circle at 50% 50%, rgba(50, 205, 50, 0.2) 12px, transparent 12px),
+            linear-gradient(60deg, transparent 40%, rgba(50, 205, 50, 0.2) 40%, rgba(34, 139, 34, 0.2) 60%, transparent 60%)
+          `,
+          backgroundSize: '60px 60px, 80px 80px, 70px 70px, 90px 90px, 100px 100px, 25px 25px',
+          backgroundColor: '#0a1a0a'
         }
       default:
         return {}
@@ -61,41 +337,120 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
     <motion.div
       className="greeting-card w-80 h-96 relative overflow-hidden"
       style={{
-        background: template.background,
-        ...getPatternStyle(template.pattern)
+        ...getTemplateStyle(template),
+        ...getBorderConfig(template.id)
       }}
+      data-template={template.id}
+      data-background={template.background}
       initial={{ scale: 0.8, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 0.5 }}
       whileHover={{ scale: 1.02 }}
     >
-      {/* Decorative Elements */}
+      {/* Decorative Elements - Template-based Flower Images + Emojis */}
       <div className="absolute top-4 right-4">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        >
-          <Star className="w-6 h-6 text-white opacity-60" />
-        </motion.div>
+        <FlowerDecoration
+          src={template.background}
+          alt={`${template.name} Background`}
+          animation="rotate"
+          size="medium"
+          opacity={0.8}
+        />
       </div>
       
       <div className="absolute top-4 left-4">
-        <motion.div
-          animate={{ y: [-5, 5, -5] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        >
-          <Flower className="w-5 h-5 text-white opacity-70" />
-        </motion.div>
+        <FlowerDecoration
+          src={template.background}
+          alt={`${template.name} Background`}
+          animation="float"
+          size="medium"
+          opacity={0.7}
+        />
       </div>
 
       <div className="absolute bottom-4 right-4">
         <motion.div
           animate={{ scale: [1, 1.2, 1] }}
           transition={{ duration: 3, repeat: Infinity }}
+          className="text-lg"
         >
-          <Heart className="w-4 h-4 text-white opacity-50" />
+          🎊
         </motion.div>
       </div>
+
+      <div className="absolute bottom-4 left-4">
+        <FlowerDecoration
+          src={template.background}
+          alt={`${template.name} Background`}
+          animation="sway"
+          size="medium"
+          opacity={0.6}
+        />
+      </div>
+
+      <div className="absolute top-1/2 left-4">
+        <FlowerDecoration
+          src={template.background}
+          alt={`${template.name} Background`}
+          animation="pulse"
+          size="small"
+          opacity={0.5}
+        />
+      </div>
+
+      <div className="absolute top-1/2 right-4">
+        <motion.div
+          animate={{ scale: [1.1, 0.8, 1.1] }}
+          transition={{ duration: 3.5, repeat: Infinity }}
+          className="text-lg opacity-50"
+        >
+          🍃
+        </motion.div>
+      </div>
+
+      <div className="absolute top-2 left-1/2 transform -translate-x-1/2">
+        <motion.div
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="text-lg opacity-70"
+        >
+          👑
+        </motion.div>
+      </div>
+
+      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2">
+        <motion.div
+          animate={{ y: [-3, 3, -3] }}
+          transition={{ duration: 3, repeat: Infinity }}
+          className="text-sm opacity-60"
+        >
+          🥂
+        </motion.div>
+      </div>
+
+      {/* Additional flower decorations - Template-based */}
+      <div className="absolute top-1/3 right-1/4">
+        <FlowerDecoration
+          src={template.background}
+          alt={`${template.name} Background`}
+          animation="float"
+          size="small"
+          opacity={0.4}
+        />
+      </div>
+
+      <div className="absolute bottom-1/3 left-1/3">
+        <FlowerDecoration
+          src={template.background}
+          alt={`${template.name} Background`}
+          animation="scale"
+          size="small"
+          opacity={0.3}
+        />
+      </div>
+
+      {/* Semi-transparent overlay for text readability */}
+      <div className="absolute inset-0 bg-black bg-opacity-20 z-5"></div>
 
       {/* Content */}
       <div className="p-8 h-full flex flex-col justify-center items-center text-center relative z-10">
@@ -104,10 +459,20 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
           {template.preview}
         </div>
 
+        {/* Debug Template Info */}
+        <div className="text-xs text-white opacity-50 mb-2">
+          Template: {template.id}
+        </div>
+
         {/* Amharic Greeting */}
         {card.amharicMessage && (
           <motion.div
-            className="text-white text-lg font-amharic mb-4 text-shadow"
+            className="text-lg font-amharic mb-4 text-shadow"
+            style={{ 
+              color: getTemplateConfig(template.id).accentColor,
+              fontFamily: getTemplateConfig(template.id).fontFamily,
+              textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
+            }}
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.2 }}
@@ -118,7 +483,12 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
 
         {/* English Message */}
         <motion.div
-          className="text-white text-xl font-bold mb-4 text-shadow"
+          className="text-xl font-bold mb-4 text-shadow"
+          style={{ 
+            color: getTemplateConfig(template.id).textColor,
+            fontFamily: getTemplateConfig(template.id).fontFamily,
+            textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
+          }}
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.3 }}
@@ -129,18 +499,28 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
         {/* Name */}
         {card.name && (
           <motion.div
-            className="text-white text-lg font-semibold text-shadow"
+            className="text-lg font-semibold text-shadow"
+            style={{ 
+              color: getTemplateConfig(template.id).accentColor,
+              fontFamily: getTemplateConfig(template.id).fontFamily,
+              textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
+            }}
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            - {card.name}
+             {card.name}
           </motion.div>
         )}
 
         {/* Year */}
         <motion.div
-          className="absolute bottom-4 left-4 text-white text-sm opacity-80"
+          className="absolute bottom-4 left-4 text-sm opacity-80"
+          style={{ 
+            color: getTemplateConfig(template.id).textColor,
+            fontFamily: getTemplateConfig(template.id).fontFamily,
+            textShadow: '1px 1px 2px rgba(0,0,0,0.8)'
+          }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.8 }}
           transition={{ delay: 0.5 }}
@@ -149,8 +529,6 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
         </motion.div>
       </div>
 
-      {/* Border Decoration */}
-      <div className="absolute inset-2 border-2 border-white border-opacity-30 rounded-2xl"></div>
     </motion.div>
   )
 }

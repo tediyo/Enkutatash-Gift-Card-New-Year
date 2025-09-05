@@ -22,6 +22,10 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link 
+          href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Dancing+Script:wght@400;700&family=Pacifico&family=Lobster&family=Cinzel:wght@400;600&family=Fredoka+One&family=Righteous&family=Bungee&display=swap" 
+          rel="stylesheet" 
+        />
       </head>
       <body className={inter.className}>
         {children}
