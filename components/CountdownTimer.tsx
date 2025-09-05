@@ -10,25 +10,25 @@ export default function CountdownTimer() {
     minutes: 0,
     seconds: 0
   })
+  const [isPast, setIsPast] = useState(false)
 
   useEffect(() => {
-    // Target date: September 18, 2025, 1:00 AM
-    const targetDate = new Date('2025-09-18T01:00:00').getTime()
+    // Target date: September 11, 2025, 1:00 AM
+    const targetDate = new Date('2025-09-11T01:00:00').getTime()
 
     const timer = setInterval(() => {
       const now = new Date().getTime()
-      const difference = targetDate - now
+      const difference = Math.abs(targetDate - now)
+      const isPastDate = now > targetDate
 
-      if (difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24))
-        const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-        const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000)
+      setIsPast(isPastDate)
 
-        setTimeLeft({ days, hours, minutes, seconds })
-      } else {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 })
-      }
+      const days = Math.floor(difference / (1000 * 60 * 60 * 24))
+      const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+      const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60))
+      const seconds = Math.floor((difference % (1000 * 60)) / 1000)
+
+      setTimeLeft({ days, hours, minutes, seconds })
     }, 1000)
 
     return () => clearInterval(timer)
@@ -41,7 +41,7 @@ export default function CountdownTimer() {
     { label: 'Seconds', value: timeLeft.seconds }
   ]
 
-  const isNewYear = timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0
+  const isNewYear = !isPast && timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0
 
   return (
     <div className="bg-white bg-opacity-20 backdrop-blur-md rounded-2xl p-6 mb-8">
@@ -50,16 +50,19 @@ export default function CountdownTimer() {
         animate={isNewYear ? { scale: [1, 1.1, 1] } : {}}
         transition={{ duration: 0.5, repeat: isNewYear ? Infinity : 0 }}
       >
-        {isNewYear ? '🎉 Happy Ethiopian New Year! 🎉' : 'Time until Enkutatash 2025'}
+        {isNewYear ? '🎉 Happy Ethiopian New Year! 🎉' : 
+         isPast ? 'Days since Enkutatash 2025' : 'Time until Enkutatash 2025'}
       </motion.h3>
       
-      {!isNewYear && (
-        <div className="text-center mb-4">
-          <p className="text-white text-sm md:text-base opacity-90">
-            September 18, 2025 at 1:00 AM
+      <div className="text-center mb-4">
+        <p className="text-white text-sm md:text-base opacity-90">
+          September 11, 2025 at 1:00 AM | Ethiopia New Year        </p>
+        {isPast && (
+          <p className="text-white text-xs md:text-sm opacity-75 mt-1">
+            {timeLeft.days > 0 ? `${timeLeft.days} day${timeLeft.days === 1 ? '' : 's'} ago` : 'Today!'}
           </p>
-        </div>
-      )}
+        )}
+      </div>
       
       <div className="flex justify-center gap-4 flex-wrap">
         {timeUnits.map((unit, index) => (
@@ -80,13 +83,11 @@ export default function CountdownTimer() {
         ))}
       </div>
       
-      {!isNewYear && (
-        <div className="text-center mt-4">
-          <p className="text-white text-xs md:text-sm opacity-75">
-            እንኳን ለአዲሱ ዓመት በዓል አደረሰዎ!
-          </p>
-        </div>
-      )}
+      <div className="text-center mt-4">
+        <p className="text-white text-xs md:text-sm opacity-75">
+          {isPast ? 'እንኳን ለአዲሱ ዓመት በዓል አደረሰዎ!' : 'እንኳን ለአዲሱ ዓመት በዓል አደረሰዎ!'}
+        </p>
+      </div>
     </div>
   )
 }
