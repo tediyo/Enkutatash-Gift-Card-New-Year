@@ -1,15 +1,16 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Share2, MessageCircle, Mail, Copy } from 'lucide-react'
+import { Share2, MessageCircle, Mail, Download, Copy } from 'lucide-react'
 import { useState } from 'react'
 
 interface ShareOptionsProps {
   cardDataUrl?: string
   cardName: string
+  onDownload: () => void
 }
 
-export default function ShareOptions({ cardDataUrl, cardName }: ShareOptionsProps) {
+export default function ShareOptions({ cardDataUrl, cardName, onDownload }: ShareOptionsProps) {
   const [showShareMenu, setShowShareMenu] = useState(false)
   const [copied, setCopied] = useState(false)
 
@@ -63,9 +64,20 @@ export default function ShareOptions({ cardDataUrl, cardName }: ShareOptionsProp
       <h3 className="text-xl font-bold text-gray-800">Share Your Card</h3>
       
       <div className="flex flex-wrap gap-3">
-        {/* Share Menu Toggle */}
+        {/* Download Button */}
         <motion.button
           className="btn-primary flex items-center gap-2"
+          onClick={onDownload}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <Download className="w-4 h-4" />
+          Download PNG
+        </motion.button>
+
+        {/* Share Menu Toggle */}
+        <motion.button
+          className="btn-secondary flex items-center gap-2"
           onClick={() => setShowShareMenu(!showShareMenu)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
