@@ -9,7 +9,9 @@ import TextInput from '@/components/TextInput'
 import CountdownTimer from '@/components/CountdownTimer'
 import ShareOptions from '@/components/ShareOptions'
 import ExportableCard from '@/components/ExportableCard'
+import ExportTest from '@/components/ExportTest'
 import { exportCard, downloadCard, generateFilename } from '@/utils/exportCard'
+import { simpleExportCard, canvasExportCard } from '@/utils/simpleExport'
 
 export interface GreetingCard {
   id: string
@@ -109,23 +111,62 @@ export default function Home() {
   const selectedTemplate = templates.find(t => t.id === currentCard.template) || templates[0]
 
   const handleDownload = async () => {
-    if (!exportableCardRef.current) return
+    if (!exportableCardRef.current) {
+      alert('Card preview not ready. Please wait a moment and try again.')
+      return
+    }
     
     setIsGenerating(true)
     try {
-      const dataUrl = await exportCard('exportable-card', {
-        format: 'png',
-        quality: 1
-      })
+      console.log('Starting card export...')
+      
+      // Wait a bit to ensure the card is fully rendered
+      await new Promise(resolve => setTimeout(resolve, 500))
+      
+      let dataUrl: string
+      
+      try {
+        // Try the main export method first
+        dataUrl = await exportCard('exportable-card', {
+          format: 'png',
+          quality: 1
+        })
+        console.log('Main export method successful')
+      } catch (mainError) {
+        console.warn('Main export failed, trying alternative method:', mainError)
+        
+        try {
+          // Try the simple export method
+          dataUrl = await simpleExportCard(exportableCardRef.current)
+          console.log('Alternative export method successful')
+        } catch (altError) {
+          console.warn('Alternative export failed, using canvas fallback:', altError)
+          
+          // Use canvas fallback
+          dataUrl = canvasExportCard(exportableCardRef.current)
+          console.log('Canvas fallback successful')
+        }
+      }
+      
+      if (!dataUrl || dataUrl.length < 100) {
+        throw new Error('Failed to generate valid image data')
+      }
+      
+      console.log('Card exported successfully, data URL length:', dataUrl.length)
       
       const filename = generateFilename(currentCard.name || 'enkutatash', 'png')
       downloadCard(dataUrl, filename)
       
       // Update card data URL for sharing
       setCardDataUrl(dataUrl)
+      
+      // Show success message
+      alert('Card downloaded successfully! Check your downloads folder.')
+      
     } catch (error) {
       console.error('Error downloading card:', error)
-      alert('Failed to download card. Please try again.')
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
+      alert(`Failed to download card: ${errorMessage}\n\nPlease try again or check the browser console for more details.`)
     } finally {
       setIsGenerating(false)
     }
@@ -280,6 +321,9 @@ export default function Home() {
                   cardName={currentCard.name || 'Enkutatash Greeting Card'}
                   onDownload={handleDownload}
                 />
+
+                {/* Debug Export Test */}
+                <ExportTest />
               </div>
 
               {/* Right Side - Preview */}

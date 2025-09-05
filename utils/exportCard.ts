@@ -17,33 +17,81 @@ export const exportCard = async (
     throw new Error('Card element not found')
   }
 
+  // Temporarily make the element visible for html2canvas
+  const originalDisplay = element.style.display
+  const originalVisibility = element.style.visibility
+  const originalPosition = element.style.position
+  
+  element.style.display = 'block'
+  element.style.visibility = 'visible'
+  element.style.position = 'static'
+
   try {
     const canvas = await html2canvas(element, {
-      backgroundColor: null,
+      backgroundColor: '#ffffff', // White background for better compatibility
       scale: 2, // Higher resolution
       useCORS: true,
       allowTaint: true,
-      width: options.width,
-      height: options.height,
-      ...(options.format === 'jpeg' && { 
-        backgroundColor: '#ffffff' // White background for JPEG
-      })
+      logging: false, // Disable logging for cleaner output
+      width: options.width || element.offsetWidth,
+      height: options.height || element.offsetHeight,
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: element.offsetWidth,
+      windowHeight: element.offsetHeight
     })
 
-    return canvas.toDataURL(`image/${options.format}`, options.quality)
+    // Restore original styles
+    element.style.display = originalDisplay
+    element.style.visibility = originalVisibility
+    element.style.position = originalPosition
+
+    const dataUrl = canvas.toDataURL(`image/${options.format}`, options.quality)
+    
+    // Validate the data URL
+    if (!dataUrl || dataUrl === 'data:,') {
+      throw new Error('Failed to generate image data')
+    }
+
+    return dataUrl
   } catch (error) {
+    // Restore original styles even if there's an error
+    element.style.display = originalDisplay
+    element.style.visibility = originalVisibility
+    element.style.position = originalPosition
+    
     console.error('Error exporting card:', error)
-    throw new Error('Failed to export card')
+    throw new Error(`Failed to export card: ${error instanceof Error ? error.message : 'Unknown error'}`)
   }
 }
 
 export const downloadCard = (dataUrl: string, filename: string) => {
-  const link = document.createElement('a')
-  link.download = filename
-  link.href = dataUrl
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
+  try {
+    // Validate data URL
+    if (!dataUrl || dataUrl === 'data:,') {
+      throw new Error('Invalid image data')
+    }
+
+    const link = document.createElement('a')
+    link.download = filename
+    link.href = dataUrl
+    link.style.display = 'none'
+    
+    document.body.appendChild(link)
+    link.click()
+    
+    // Clean up after a short delay
+    setTimeout(() => {
+      if (document.body.contains(link)) {
+        document.body.removeChild(link)
+      }
+    }, 100)
+    
+    console.log('Download started:', filename)
+  } catch (error) {
+    console.error('Error downloading card:', error)
+    throw new Error('Failed to download card')
+  }
 }
 
 export const generateFilename = (name: string, format: string): string => {
