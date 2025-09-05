@@ -9,7 +9,6 @@ import TextInput from '@/components/TextInput'
 import CountdownTimer from '@/components/CountdownTimer'
 import ShareOptions from '@/components/ShareOptions'
 import ExportableCard from '@/components/ExportableCard'
-import ExportTest from '@/components/ExportTest'
 import { exportCard, downloadCard, generateFilename } from '@/utils/exportCard'
 import { simpleExportCard, canvasExportCard } from '@/utils/simpleExport'
 
@@ -321,9 +320,6 @@ export default function Home() {
                   cardName={currentCard.name || 'Enkutatash Greeting Card'}
                   onDownload={handleDownload}
                 />
-
-                {/* Debug Export Test */}
-                <ExportTest />
               </div>
 
               {/* Right Side - Preview */}
