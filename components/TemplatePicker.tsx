@@ -23,8 +23,8 @@ export default function TemplatePicker({
             key={template.id}
             className={`template-card p-4 rounded-xl border-2 transition-all duration-300 ${
               selectedTemplate === template.id
-                ? 'border-green-500 bg-green-50 shadow-lg'
-                : 'border-green-200 bg-white hover:border-green-400'
+                ? 'border-yellow-500 bg-yellow-50 shadow-lg'
+                : 'border-yellow-200 bg-white hover:border-yellow-400'
             }`}
             onClick={() => onTemplateChange(template.id)}
             initial={{ opacity: 0, y: 20 }}

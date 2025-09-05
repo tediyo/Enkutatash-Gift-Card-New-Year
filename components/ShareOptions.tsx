@@ -193,7 +193,7 @@ export default function ShareOptions({
 
         {/* Share Menu Toggle */}
         <motion.button
-          className="mobile-control-button bg-green-600 hover:bg-green-700 text-white flex items-center justify-center gap-2 mobile-button px-4 py-2 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
+          className="mobile-control-button bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center gap-2 mobile-button px-4 py-2 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
           onClick={() => setShowShareMenu(!showShareMenu)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
