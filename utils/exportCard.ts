@@ -66,7 +66,7 @@ export const exportCard = async (
     
     const canvas = await html2canvas(element, {
       backgroundColor: null, // Keep original background
-      scale: 2, // Higher resolution
+      scale: 4, // Much higher resolution for better quality
       useCORS: true,
       allowTaint: true,
       logging: false, // Disable logging for cleaner output
@@ -79,6 +79,15 @@ export const exportCard = async (
       imageTimeout: 30000, // Increase timeout for images to load
       removeContainer: false, // Keep container for proper rendering
       foreignObjectRendering: false, // Disable this as it can cause issues
+      pixelRatio: window.devicePixelRatio || 1, // Use device pixel ratio for crisp images
+      letterRendering: true, // Better text rendering
+      onclone: (clonedDoc) => {
+        // Ensure fonts are loaded in cloned document
+        const clonedElement = clonedDoc.getElementById(element.id)
+        if (clonedElement) {
+          clonedElement.style.fontFamily = getComputedStyle(element).fontFamily
+        }
+      }
     })
 
     console.log('✅ html2canvas export completed')
