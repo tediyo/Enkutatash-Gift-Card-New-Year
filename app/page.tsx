@@ -33,57 +33,71 @@ const templates: CardTemplate[] = [
     id: 'meskel-flowers',
     name: 'Meskel Daisies',
     preview: '🌼',
-    background: '/images/flowers/EF.jpg',
+    background: '/images/flowers/backgrounds/EF.jpg',
     pattern: 'meskel'
   },
   {
     id: 'yellow-garden',
     name: 'Yellow Garden',
     preview: '🌻',
-    background: '/images/flowers/EF5.jpg',
+    background: '/images/flowers/backgrounds/EF5.jpg',
     pattern: 'garden'
   },
   {
     id: 'golden-sunrise',
     name: 'Golden Sunrise',
     preview: '🌅',
-    background: '/images/flowers/FR3.jpg',
+    background: '/images/flowers/backgrounds/FR3.jpg',
     pattern: 'sunrise'
   },
   {
     id: 'ethiopian-spring',
     name: 'Ethiopian Spring',
     preview: '🌸',
-    background: '/images/flowers/FW2.webp',
+    background: '/images/flowers/backgrounds/FW2.webp',
     pattern: 'spring'
   },
   {
     id: 'classic-meskel',
     name: 'Classic Meskel',
     preview: '🌺',
-    background: '/images/flowers/EF.jpg',
+    background: '/images/flowers/backgrounds/F4.jpg',
     pattern: 'classic'
   },
   {
     id: 'vibrant-garden',
     name: 'Vibrant Garden',
     preview: '🌻',
-    background: '/images/flowers/EF5.jpg',
+    background: '/images/flowers/backgrounds/f5.jpg',
     pattern: 'vibrant'
   },
   {
     id: 'sunset-bloom',
     name: 'Sunset Bloom',
     preview: '🌅',
-    background: '/images/flowers/FR3.jpg',
+    background: '/images/flowers/backgrounds/f6.jpg',
     pattern: 'sunset'
   },
   {
     id: 'spring-celebration',
     name: 'Spring Celebration',
     preview: '🌸',
-    background: '/images/flowers/FW2.webp',
+    background: '/images/flowers/backgrounds/f7.jpg',
     pattern: 'celebration'
+  },
+  {
+    id: 'floral-elegance',
+    name: 'Floral Elegance',
+    preview: '🌹',
+    background: '/images/flowers/backgrounds/f8.jpg',
+    pattern: 'elegance'
+  },
+  {
+    id: 'blooming-garden',
+    name: 'Blooming Garden',
+    preview: '🌺',
+    background: '/images/flowers/backgrounds/f9.jpg',
+    pattern: 'blooming'
   }
 ]
 

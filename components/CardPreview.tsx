@@ -23,12 +23,10 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
       backgroundColor: '#f0f0f0'
     }
 
-    const patternStyle = getPatternStyle(template.pattern)
     const templateConfig = getTemplateConfig(template.id)
 
     return {
       ...baseStyle,
-      ...patternStyle,
       ...templateConfig
     }
   }
@@ -99,6 +97,22 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
           borderRadius: '32px',
           boxShadow: '0 0 45px rgba(255, 20, 147, 0.5), inset 0 0 45px rgba(255, 20, 147, 0.1)'
         }
+      case 'elegance':
+        return {
+          borderColor: '#DA70D6',
+          borderWidth: '3px',
+          borderStyle: 'solid',
+          borderRadius: '20px',
+          boxShadow: '0 0 25px rgba(218, 112, 214, 0.4), inset 0 0 25px rgba(218, 112, 214, 0.1)'
+        }
+      case 'blooming':
+        return {
+          borderColor: '#32CD32',
+          borderWidth: '4px',
+          borderStyle: 'solid',
+          borderRadius: '26px',
+          boxShadow: '0 0 30px rgba(50, 205, 50, 0.4), inset 0 0 30px rgba(50, 205, 50, 0.1)'
+        }
       default:
         return {
           borderColor: '#FF6B35',
@@ -167,6 +181,20 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
           textColor: '#2E8B57',
           accentColor: '#FF1493',
           backgroundColor: '#F0FFFF'
+        }
+      case 'floral-elegance':
+        return {
+          fontFamily: "'Playfair Display', serif",
+          textColor: '#8B008B',
+          accentColor: '#DA70D6',
+          backgroundColor: '#F8F8FF'
+        }
+      case 'blooming-garden':
+        return {
+          fontFamily: "'Dancing Script', cursive",
+          textColor: '#006400',
+          accentColor: '#32CD32',
+          backgroundColor: '#F0FFF0'
         }
       default:
         return {
@@ -274,6 +302,31 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
           `,
           backgroundSize: '70px 70px, 85px 85px, 65px 65px, 90px 90px, 55px 55px, 75px 75px, 35px 35px',
           backgroundColor: '#0d0d0d'
+        }
+      case 'elegance':
+        return {
+          backgroundImage: `
+            radial-gradient(circle at 20% 20%, rgba(218, 112, 214, 0.4) 6px, transparent 6px),
+            radial-gradient(circle at 80% 30%, rgba(147, 0, 211, 0.3) 8px, transparent 8px),
+            radial-gradient(circle at 30% 80%, rgba(186, 85, 211, 0.35) 7px, transparent 7px),
+            radial-gradient(circle at 70% 70%, rgba(221, 160, 221, 0.25) 9px, transparent 9px),
+            linear-gradient(30deg, transparent 30%, rgba(218, 112, 214, 0.2) 30%, rgba(147, 0, 211, 0.2) 70%, transparent 70%)
+          `,
+          backgroundSize: '50px 50px, 65px 65px, 55px 55px, 75px 75px, 30px 30px',
+          backgroundColor: '#1a0a1a'
+        }
+      case 'blooming':
+        return {
+          backgroundImage: `
+            radial-gradient(circle at 25% 25%, rgba(50, 205, 50, 0.5) 8px, transparent 8px),
+            radial-gradient(circle at 75% 25%, rgba(34, 139, 34, 0.4) 10px, transparent 10px),
+            radial-gradient(circle at 25% 75%, rgba(0, 100, 0, 0.6) 7px, transparent 7px),
+            radial-gradient(circle at 75% 75%, rgba(144, 238, 144, 0.3) 9px, transparent 9px),
+            radial-gradient(circle at 50% 50%, rgba(50, 205, 50, 0.2) 12px, transparent 12px),
+            linear-gradient(60deg, transparent 40%, rgba(50, 205, 50, 0.2) 40%, rgba(34, 139, 34, 0.2) 60%, transparent 60%)
+          `,
+          backgroundSize: '60px 60px, 80px 80px, 70px 70px, 90px 90px, 100px 100px, 25px 25px',
+          backgroundColor: '#0a1a0a'
         }
       default:
         return {}
