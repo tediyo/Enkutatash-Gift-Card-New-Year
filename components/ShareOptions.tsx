@@ -175,24 +175,25 @@ export default function ShareOptions({
   ]
 
   return (
-    <div className="space-y-4">
-      <h3 className="text-xl font-bold text-gray-800">Share Your Card</h3>
+    <div className="space-y-3 md:space-y-4">
+      <h3 className="mobile-h3 text-lg md:text-xl font-bold text-gray-800">Share Your Card</h3>
       
-      <div className="flex flex-wrap gap-3">
+      <div className="mobile-controls flex flex-col sm:flex-row gap-2 md:gap-3">
         {/* Download Button */}
         <motion.button
-          className="btn-primary flex items-center gap-2"
+          className="mobile-control-button btn-primary flex items-center justify-center gap-2 mobile-button"
           onClick={onDownload}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           <Download className="w-4 h-4" />
-          Download PNG
+          <span className="hidden sm:inline">Download PNG</span>
+          <span className="sm:hidden">Download</span>
         </motion.button>
 
         {/* Share Menu Toggle */}
         <motion.button
-          className="btn-secondary flex items-center gap-2"
+          className="mobile-control-button btn-secondary flex items-center justify-center gap-2 mobile-button"
           onClick={() => setShowShareMenu(!showShareMenu)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
@@ -210,15 +211,15 @@ export default function ShareOptions({
           showShareMenu ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
-        <div className="mt-4 space-y-6">
+        <div className="mt-3 md:mt-4 space-y-4 md:space-y-6">
           {/* Social Media Platforms */}
           <div>
-            <h4 className="text-sm font-semibold text-gray-700 mb-3">Social Media</h4>
-            <div className="grid grid-cols-3 gap-3">
+            <h4 className="mobile-h4 text-sm md:text-sm font-semibold text-gray-700 mb-2 md:mb-3">Social Media</h4>
+            <div className="mobile-share-grid grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-3">
               {socialMediaOptions.map((option, index) => (
                 <motion.button
                   key={option.name}
-                  className={`flex flex-col items-center gap-2 p-3 rounded-xl transition-all duration-200 ${option.color} text-white hover:opacity-90`}
+                  className={`mobile-share-button flex flex-col items-center gap-1 md:gap-2 p-2 md:p-3 rounded-lg md:rounded-xl transition-all duration-200 ${option.color} text-white hover:opacity-90 mobile-touch-target`}
                   onClick={option.action}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -226,7 +227,7 @@ export default function ShareOptions({
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <option.icon className="w-5 h-5" />
+                  <option.icon className="mobile-share-icon w-4 h-4 md:w-5 md:h-5" />
                   <span className="text-xs font-medium">
                     {option.name === 'Copy Link' && copied ? 'Copied!' : option.name}
                   </span>
@@ -237,12 +238,12 @@ export default function ShareOptions({
 
           {/* Utility Options */}
           <div>
-            <h4 className="text-sm font-semibold text-gray-700 mb-3">More Options</h4>
-            <div className="grid grid-cols-2 gap-3">
+            <h4 className="mobile-h4 text-sm md:text-sm font-semibold text-gray-700 mb-2 md:mb-3">More Options</h4>
+            <div className="mobile-share-grid grid grid-cols-2 gap-2 md:gap-3">
               {utilityOptions.map((option, index) => (
                 <motion.button
                   key={option.name}
-                  className={`flex items-center gap-3 p-3 rounded-xl transition-all duration-200 ${option.color} text-white hover:opacity-90`}
+                  className={`mobile-share-button flex items-center gap-2 md:gap-3 p-2 md:p-3 rounded-lg md:rounded-xl transition-all duration-200 ${option.color} text-white hover:opacity-90 mobile-touch-target`}
                   onClick={option.action}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -250,8 +251,8 @@ export default function ShareOptions({
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <option.icon className="w-4 h-4" />
-                  <span className="text-sm font-medium">
+                  <option.icon className="mobile-share-icon w-4 h-4" />
+                  <span className="text-xs md:text-sm font-medium">
                     {option.name === 'Copy Link' && copied ? 'Copied!' : option.name}
                   </span>
                 </motion.button>
@@ -264,31 +265,31 @@ export default function ShareOptions({
       {/* QR Code Modal */}
       {showQRCode && (
         <motion.div
-          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-2 md:p-4 z-50 mobile-modal-overlay"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
           <motion.div
-            className="bg-white rounded-2xl p-6 max-w-sm w-full text-center"
+            className="mobile-modal bg-white rounded-xl md:rounded-2xl p-4 md:p-6 max-w-xs md:max-w-sm w-full text-center mobile-modal-content"
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
           >
-            <h3 className="text-lg font-bold text-gray-800 mb-4">QR Code</h3>
+            <h3 className="mobile-modal-title text-base md:text-lg font-bold text-gray-800 mb-3 md:mb-4">QR Code</h3>
             {qrCodeUrl && (
               <img
                 src={qrCodeUrl}
                 alt="QR Code"
-                className="w-48 h-48 mx-auto mb-4 rounded-lg"
+                className="w-32 h-32 md:w-48 md:h-48 mx-auto mb-3 md:mb-4 rounded-lg"
               />
             )}
-            <p className="text-sm text-gray-600 mb-4">
+            <p className="mobile-modal-text text-xs md:text-sm text-gray-600 mb-3 md:mb-4">
               Scan this QR code to view the greeting card
             </p>
             <button
               onClick={() => setShowQRCode(false)}
-              className="btn-primary w-full"
+              className="btn-primary w-full mobile-button"
             >
               Close
             </button>
