@@ -335,7 +335,7 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
 
   return (
     <motion.div
-      className="greeting-card w-80 h-96 relative overflow-hidden"
+      className="greeting-card mobile-card-preview w-64 h-80 md:w-80 md:h-96 relative overflow-hidden"
       style={{
         ...getTemplateStyle(template),
         ...getBorderConfig(template.id)
@@ -467,7 +467,7 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
         {/* Amharic Greeting */}
         {card.amharicMessage && (
           <motion.div
-            className="text-lg font-amharic mb-4 text-shadow"
+            className="mobile-card-text text-sm md:text-lg font-amharic mb-3 md:mb-4 text-shadow"
             style={{ 
               color: card.amharicTextColor || getTemplateConfig(template.id).accentColor,
               fontFamily: getTemplateConfig(template.id).fontFamily,
@@ -483,7 +483,7 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
 
         {/* English Message */}
         <motion.div
-          className="text-xl font-bold mb-4 text-shadow"
+          className="mobile-card-title text-lg md:text-xl font-bold mb-3 md:mb-4 text-shadow"
           style={{ 
             color: card.textColor || getTemplateConfig(template.id).textColor,
             fontFamily: getTemplateConfig(template.id).fontFamily,
@@ -499,7 +499,7 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
         {/* Name */}
         {card.name && (
           <motion.div
-            className="text-lg font-semibold text-shadow"
+            className="mobile-card-subtitle text-sm md:text-lg font-semibold text-shadow"
             style={{ 
               color: card.nameTextColor || getTemplateConfig(template.id).accentColor,
               fontFamily: getTemplateConfig(template.id).fontFamily,

@@ -199,7 +199,7 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
     return (
       <div
         ref={ref}
-        className="relative w-80 h-96 mx-auto"
+        className="relative mobile-card-preview w-64 h-80 md:w-80 md:h-96 mx-auto"
         style={{
           ...templateStyle,
           ...borderConfig,
