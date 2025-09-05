@@ -89,7 +89,7 @@ export default function TextInput({
             value={value}
             onChange={handleChange}
             placeholder={placeholder}
-            className={`input-field resize-none h-24 pr-16 ${fontFamily === 'amharic' ? 'font-amharic' : ''}`}
+            className={`input-field resize-none h-24 pr-12 sm:pr-16 ${fontFamily === 'amharic' ? 'font-amharic' : ''}`}
             style={{ fontFamily: fontFamily === 'amharic' ? 'Abyssinica SIL, serif' : 'inherit' }}
           />
         ) : (
@@ -98,26 +98,26 @@ export default function TextInput({
             value={value}
             onChange={handleChange}
             placeholder={placeholder}
-            className={`input-field pr-16 ${fontFamily === 'amharic' ? 'font-amharic' : ''}`}
+            className={`input-field pr-12 sm:pr-16 ${fontFamily === 'amharic' ? 'font-amharic' : ''}`}
             style={{ fontFamily: fontFamily === 'amharic' ? 'Abyssinica SIL, serif' : 'inherit' }}
           />
         )}
         
         {/* Inline Color Picker Button */}
         {showColorPicker && onTextColorChange && (
-          <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+          <div className="absolute right-1 sm:right-2 top-1/2 transform -translate-y-1/2">
             <motion.button
               type="button"
-              className="flex items-center gap-2 px-3 py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 transition-all duration-200 shadow-sm"
+              className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg border border-gray-300 bg-white hover:bg-gray-50 transition-all duration-200 shadow-sm"
               onClick={() => setShowColorPalette(!showColorPalette)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
               <div 
-                className="w-5 h-5 rounded border border-gray-300"
+                className="w-4 h-4 sm:w-5 sm:h-5 rounded border border-gray-300"
                 style={{ backgroundColor: textColor }}
               />
-              <ChevronDown className={`w-4 h-4 text-gray-500 transition-transform duration-200 ${showColorPalette ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`w-3 h-3 sm:w-4 sm:h-4 text-gray-500 transition-transform duration-200 ${showColorPalette ? 'rotate-180' : ''}`} />
             </motion.button>
           </div>
         )}
@@ -133,17 +133,17 @@ export default function TextInput({
       {/* Inline Color Palette */}
       {showColorPicker && onTextColorChange && showColorPalette && (
         <motion.div
-          className="absolute z-10 mt-2 p-4 bg-white rounded-lg border border-gray-200 shadow-lg"
+          className="absolute z-10 mt-2 left-0 right-0 sm:left-auto sm:right-0 sm:w-80 p-3 sm:p-4 bg-white rounded-lg border border-gray-200 shadow-lg"
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.2 }}
         >
-          <div className="grid grid-cols-8 gap-2 mb-3">
+          <div className="grid grid-cols-6 sm:grid-cols-8 gap-1.5 sm:gap-2 mb-3">
             {predefinedColors.map((color) => (
               <motion.button
                 key={color}
-                className={`w-8 h-8 rounded border-2 transition-all duration-200 ${
+                className={`w-6 h-6 sm:w-8 sm:h-8 rounded border-2 transition-all duration-200 ${
                   textColor === color 
                     ? 'border-gray-800 scale-110 shadow-md' 
                     : 'border-gray-300 hover:border-gray-500'
@@ -161,14 +161,14 @@ export default function TextInput({
           </div>
           
           {/* Custom Color Input */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <input
               type="color"
               value={textColor}
               onChange={(e) => onTextColorChange(e.target.value)}
-              className="w-10 h-8 rounded border border-gray-300 cursor-pointer"
+              className="w-8 h-6 sm:w-10 sm:h-8 rounded border border-gray-300 cursor-pointer"
             />
-            <span className="text-sm text-gray-600 font-medium">Custom Color</span>
+            <span className="text-xs sm:text-sm text-gray-600 font-medium">Custom</span>
           </div>
         </motion.div>
       )}
