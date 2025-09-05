@@ -63,7 +63,11 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
         className="w-96 h-[480px] relative overflow-hidden bg-white rounded-3xl shadow-2xl"
         style={{
           background: template.background,
-          ...getPatternStyle(template.pattern)
+          ...getPatternStyle(template.pattern),
+          // Ensure proper rendering for html2canvas
+          transform: 'translateZ(0)',
+          backfaceVisibility: 'hidden',
+          WebkitBackfaceVisibility: 'hidden'
         }}
       >
         {/* Decorative Elements */}
