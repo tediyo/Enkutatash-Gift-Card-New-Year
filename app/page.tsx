@@ -8,9 +8,6 @@ import TemplatePicker from '@/components/TemplatePicker'
 import TextInput from '@/components/TextInput'
 import CountdownTimer from '@/components/CountdownTimer'
 import ShareOptions from '@/components/ShareOptions'
-import ExportableCard from '@/components/ExportableCard'
-import { exportCard, downloadCard, generateFilename } from '@/utils/exportCard'
-import { simpleExportCard, canvasExportCard } from '@/utils/simpleExport'
 
 export interface GreetingCard {
   id: string
@@ -117,9 +114,7 @@ export default function Home() {
     amharicMessage: amharicGreetings[0]
   })
   const [showCardCreator, setShowCardCreator] = useState(false)
-  const [isGenerating, setIsGenerating] = useState(false)
   const [cardDataUrl, setCardDataUrl] = useState<string>('')
-  const exportableCardRef = useRef<HTMLDivElement>(null)
 
   const handleTemplateChange = (templateId: string) => {
     console.log('Template changing to:', templateId)
@@ -154,90 +149,6 @@ export default function Home() {
 
   const selectedTemplate = templates.find(t => t.id === currentCard.template) || templates[0]
 
-  const preloadImage = (src: string): Promise<void> => {
-    return new Promise((resolve, reject) => {
-      const img = new Image()
-      img.onload = () => resolve()
-      img.onerror = () => reject(new Error(`Failed to load image: ${src}`))
-      img.src = src
-    })
-  }
-
-  const handleDownload = async () => {
-    if (!exportableCardRef.current) {
-      alert('Card preview not ready. Please wait a moment and try again.')
-      return
-    }
-    
-    setIsGenerating(true)
-    try {
-      console.log('Starting card export...')
-      
-      // Preload the background image to ensure it's available
-      const selectedTemplate = templates.find(t => t.id === currentCard.template) || templates[0]
-      if (selectedTemplate.background) {
-        try {
-          await preloadImage(selectedTemplate.background)
-          console.log('Background image preloaded successfully')
-          
-          // Additional wait to ensure the image is fully rendered
-          await new Promise(resolve => setTimeout(resolve, 500))
-        } catch (error) {
-          console.warn('Failed to preload background image:', error)
-        }
-      }
-      
-      // Wait longer to ensure background images are fully loaded
-      await new Promise(resolve => setTimeout(resolve, 1500))
-      
-      let dataUrl: string
-      
-      try {
-        // Try the main export method first
-        dataUrl = await exportCard('exportable-card', {
-          format: 'png',
-          quality: 1
-        })
-        console.log('Main export method successful')
-      } catch (mainError) {
-        console.warn('Main export failed, trying alternative method:', mainError)
-        
-        try {
-          // Try the simple export method
-          dataUrl = await simpleExportCard(exportableCardRef.current)
-          console.log('Alternative export method successful')
-        } catch (altError) {
-          console.warn('Alternative export failed, using canvas fallback:', altError)
-          
-          // Use canvas fallback
-          dataUrl = canvasExportCard(exportableCardRef.current)
-          console.log('Canvas fallback successful')
-        }
-      }
-      
-      if (!dataUrl || dataUrl.length < 100) {
-        throw new Error('Failed to generate valid image data')
-      }
-      
-      console.log('Card exported successfully, data URL length:', dataUrl.length)
-      
-      const filename = generateFilename(currentCard.name || 'enkutatash', 'png')
-      downloadCard(dataUrl, filename)
-      
-      // Update card data URL for sharing
-      setCardDataUrl(dataUrl)
-      
-      // Show success message
-      alert('Card downloaded successfully! Check your downloads folder.')
-      
-    } catch (error) {
-      console.error('Error downloading card:', error)
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred'
-      alert(`Failed to download card: ${errorMessage}\n\nPlease try again or check the browser console for more details.`)
-    } finally {
-      setIsGenerating(false)
-    }
-  }
 
   return (
     <div className="min-h-screen cultural-pattern">
@@ -421,7 +332,6 @@ export default function Home() {
                 <ShareOptions
                   cardDataUrl={cardDataUrl}
                   cardName={currentCard.name || 'Enkutatash Greeting Card'}
-                  onDownload={handleDownload}
                 />
               </div>
 
@@ -433,15 +343,6 @@ export default function Home() {
                   template={selectedTemplate}
                 />
                 
-                {/* Hidden exportable card for download */}
-                <div id="exportable-card" className="hidden">
-                  <ExportableCard
-                    key={`export-${currentCard.template}`}
-                    ref={exportableCardRef}
-                    card={currentCard}
-                    template={selectedTemplate}
-                  />
-                </div>
               </div>
             </div>
           </motion.div>
