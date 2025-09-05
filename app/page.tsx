@@ -406,7 +406,7 @@ export default function Home() {
             exit={{ scale: 0.8, opacity: 0 }}
           >
             <div className="flex justify-between items-center mb-4 md:mb-6 mobile-modal-header">
-              <h2 className="mobile-h2 text-2xl md:text-3xl font-bold text-ethiopian-red">Create Your Greeting Card</h2>
+              <h2 className="mobile-h2 text-2xl md:text-3xl font-bold text-ethiopian-green">Create Your Greeting Card</h2>
               <button
                 onClick={() => setShowCardCreator(false)}
                 className="text-gray-500 hover:text-gray-700 text-xl md:text-2xl mobile-touch-target"

@@ -16,7 +16,7 @@ export default function TemplatePicker({
 }: TemplatePickerProps) {
   return (
     <div className="space-y-4">
-      <h3 className="text-xl font-bold text-gray-800">Choose Template</h3>
+      <h3 className="text-xl font-bold text-green-800">Choose Template</h3>
       <div className="grid grid-cols-2 gap-4">
         {templates.map((template, index) => (
           <motion.div
