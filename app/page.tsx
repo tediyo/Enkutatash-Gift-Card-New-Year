@@ -33,28 +33,28 @@ const templates: CardTemplate[] = [
     id: 'meskel-flowers',
     name: 'Meskel Daisies',
     preview: '🌼',
-    background: 'linear-gradient(135deg, #FFD700 0%, #FFA500 30%, #FF8C00 70%, #FFD700 100%)',
+    background: '/images/flowers/EF.jpg',
     pattern: 'meskel'
   },
   {
     id: 'yellow-garden',
     name: 'Yellow Garden',
     preview: '🌻',
-    background: 'linear-gradient(135deg, #FFF8DC 0%, #FFD700 25%, #FFA500 50%, #FF8C00 75%, #FFD700 100%)',
+    background: '/images/flowers/EF5.jpg',
     pattern: 'garden'
   },
   {
     id: 'golden-sunrise',
     name: 'Golden Sunrise',
     preview: '🌅',
-    background: 'linear-gradient(135deg, #FFE4B5 0%, #FFD700 40%, #FFA500 80%, #FF8C00 100%)',
+    background: '/images/flowers/FR3.jpg',
     pattern: 'sunrise'
   },
   {
     id: 'ethiopian-spring',
     name: 'Ethiopian Spring',
     preview: '🌸',
-    background: 'linear-gradient(135deg, #F0E68C 0%, #FFD700 30%, #FFA500 60%, #FF8C00 90%, #FFD700 100%)',
+    background: '/images/flowers/FW2.webp',
     pattern: 'spring'
   }
 ]
@@ -180,49 +180,63 @@ export default function Home() {
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
       >
-        {/* Background Elements - Yellow Flowers */}
+        {/* Background Elements - Ethiopian New Year Emojis */}
         <div className="absolute inset-0 overflow-hidden">
           <motion.div
             className="absolute top-10 left-10 text-6xl opacity-30"
             animate={{ rotate: 360 }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           >
-            🌼
+            🎉
           </motion.div>
           <motion.div
             className="absolute top-20 right-20 text-5xl opacity-40"
             animate={{ y: [-10, 10, -10] }}
             transition={{ duration: 3, repeat: Infinity }}
           >
-            🌻
+            🌺
           </motion.div>
           <motion.div
             className="absolute bottom-20 left-1/4 text-6xl opacity-35"
             animate={{ x: [-20, 20, -20] }}
             transition={{ duration: 4, repeat: Infinity }}
           >
-            🌸
+            🎊
           </motion.div>
           <motion.div
             className="absolute top-1/2 right-1/4 text-4xl opacity-25"
             animate={{ scale: [0.8, 1.2, 0.8] }}
             transition={{ duration: 5, repeat: Infinity }}
           >
-            🌺
+            🌸
           </motion.div>
           <motion.div
             className="absolute bottom-1/3 right-10 text-3xl opacity-30"
             animate={{ rotate: [0, 15, -15, 0] }}
             transition={{ duration: 6, repeat: Infinity }}
           >
-            🌼
+            🌻
           </motion.div>
           <motion.div
             className="absolute top-1/3 left-1/3 text-4xl opacity-20"
             animate={{ y: [-15, 15, -15] }}
             transition={{ duration: 4.5, repeat: Infinity }}
           >
-            🌻
+            🍃
+          </motion.div>
+          <motion.div
+            className="absolute top-1/2 left-1/2 text-3xl opacity-25"
+            animate={{ scale: [1, 1.3, 1] }}
+            transition={{ duration: 3.5, repeat: Infinity }}
+          >
+            👑
+          </motion.div>
+          <motion.div
+            className="absolute bottom-1/2 right-1/3 text-2xl opacity-30"
+            animate={{ y: [-8, 8, -8] }}
+            transition={{ duration: 4, repeat: Infinity }}
+          >
+            🥂
           </motion.div>
         </div>
 

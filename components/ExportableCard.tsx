@@ -2,6 +2,7 @@
 
 import { forwardRef } from 'react'
 import { GreetingCard, CardTemplate } from '@/app/page'
+import FlowerDecoration from './FlowerDecoration'
 
 interface ExportableCardProps {
   card: GreetingCard
@@ -66,7 +67,10 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
         ref={ref}
         className="w-96 h-[480px] relative overflow-hidden bg-white rounded-3xl shadow-2xl"
         style={{
-          background: template.background,
+          backgroundImage: `url(${template.background})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
           ...getPatternStyle(template.pattern),
           // Ensure proper rendering for html2canvas
           transform: 'translateZ(0)',
@@ -74,42 +78,104 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
           WebkitBackfaceVisibility: 'hidden'
         }}
       >
-        {/* Decorative Elements - Yellow Flowers */}
+        {/* Decorative Elements - Real Flower Images + Emojis */}
         <div className="absolute top-6 right-6">
-          <div className="text-3xl">
-            🌼
-          </div>
+          <FlowerDecoration
+            src="/images/flowers/EF.jpg"
+            alt="Meskel Daisy"
+            animation="rotate"
+            size="large"
+            opacity={0.8}
+          />
         </div>
         
         <div className="absolute top-6 left-6">
-          <div className="text-2xl">
-            🌻
-          </div>
+          <FlowerDecoration
+            src="/images/flowers/EF5.jpg"
+            alt="Yellow Flower"
+            animation="float"
+            size="large"
+            opacity={0.7}
+          />
         </div>
 
         <div className="absolute bottom-6 right-6">
           <div className="text-xl">
-            🌸
+            🎊
           </div>
         </div>
 
         <div className="absolute bottom-6 left-6">
-          <div className="text-2xl">
-            🌺
-          </div>
+          <FlowerDecoration
+            src="/images/flowers/FR3.jpg"
+            alt="Flower Arrangement"
+            animation="sway"
+            size="large"
+            opacity={0.6}
+          />
         </div>
 
         <div className="absolute top-1/2 left-6">
-          <div className="text-lg opacity-60">
-            🌼
-          </div>
+          <FlowerDecoration
+            src="/images/flowers/FW2.webp"
+            alt="Spring Flower"
+            animation="pulse"
+            size="medium"
+            opacity={0.5}
+          />
         </div>
 
         <div className="absolute top-1/2 right-6">
           <div className="text-lg opacity-50">
-            🌻
+            🍃
           </div>
         </div>
+
+        <div className="absolute top-4 left-1/2 transform -translate-x-1/2">
+          <div className="text-xl opacity-70">
+            👑
+          </div>
+        </div>
+
+        <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">
+          <div className="text-lg opacity-60">
+            🥂
+          </div>
+        </div>
+
+        {/* Additional flower decorations */}
+        <div className="absolute top-1/3 right-1/4">
+          <FlowerDecoration
+            src="/images/flowers/EF.jpg"
+            alt="Small Daisy"
+            animation="float"
+            size="small"
+            opacity={0.4}
+          />
+        </div>
+
+        <div className="absolute bottom-1/3 left-1/3">
+          <FlowerDecoration
+            src="/images/flowers/EF5.jpg"
+            alt="Small Yellow Flower"
+            animation="scale"
+            size="small"
+            opacity={0.3}
+          />
+        </div>
+
+        <div className="absolute top-1/4 left-1/4">
+          <FlowerDecoration
+            src="/images/flowers/FR3.jpg"
+            alt="Tiny Flower"
+            animation="pulse"
+            size="small"
+            opacity={0.2}
+          />
+        </div>
+
+        {/* Semi-transparent overlay for text readability */}
+        <div className="absolute inset-0 bg-black bg-opacity-20 z-5"></div>
 
         {/* Content */}
         <div className="p-10 h-full flex flex-col justify-center items-center text-center relative z-10">

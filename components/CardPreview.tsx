@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import { Heart, Star, Flower } from 'lucide-react'
 import { GreetingCard, CardTemplate } from '@/app/page'
+import FlowerDecoration from './FlowerDecoration'
 
 interface CardPreviewProps {
   card: GreetingCard
@@ -65,7 +66,10 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
     <motion.div
       className="greeting-card w-80 h-96 relative overflow-hidden"
       style={{
-        background: template.background,
+        backgroundImage: `url(${template.background})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
         ...getPatternStyle(template.pattern)
       }}
       initial={{ scale: 0.8, opacity: 0 }}
@@ -73,25 +77,25 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
       transition={{ duration: 0.5 }}
       whileHover={{ scale: 1.02 }}
     >
-      {/* Decorative Elements - Yellow Flowers */}
+      {/* Decorative Elements - Real Flower Images + Emojis */}
       <div className="absolute top-4 right-4">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="text-2xl"
-        >
-          🌼
-        </motion.div>
+        <FlowerDecoration
+          src="/images/flowers/EF.jpg"
+          alt="Meskel Daisy"
+          animation="rotate"
+          size="medium"
+          opacity={0.8}
+        />
       </div>
       
       <div className="absolute top-4 left-4">
-        <motion.div
-          animate={{ y: [-5, 5, -5] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="text-xl"
-        >
-          🌻
-        </motion.div>
+        <FlowerDecoration
+          src="/images/flowers/EF5.jpg"
+          alt="Yellow Flower"
+          animation="float"
+          size="medium"
+          opacity={0.7}
+        />
       </div>
 
       <div className="absolute bottom-4 right-4">
@@ -100,28 +104,28 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
           transition={{ duration: 3, repeat: Infinity }}
           className="text-lg"
         >
-          🌸
+          🎊
         </motion.div>
       </div>
 
       <div className="absolute bottom-4 left-4">
-        <motion.div
-          animate={{ rotate: [0, 10, -10, 0] }}
-          transition={{ duration: 4, repeat: Infinity }}
-          className="text-xl"
-        >
-          🌺
-        </motion.div>
+        <FlowerDecoration
+          src="/images/flowers/FR3.jpg"
+          alt="Flower Arrangement"
+          animation="sway"
+          size="medium"
+          opacity={0.6}
+        />
       </div>
 
       <div className="absolute top-1/2 left-4">
-        <motion.div
-          animate={{ scale: [0.8, 1.1, 0.8] }}
-          transition={{ duration: 2.5, repeat: Infinity }}
-          className="text-lg opacity-60"
-        >
-          🌼
-        </motion.div>
+        <FlowerDecoration
+          src="/images/flowers/FW2.webp"
+          alt="Spring Flower"
+          animation="pulse"
+          size="small"
+          opacity={0.5}
+        />
       </div>
 
       <div className="absolute top-1/2 right-4">
@@ -130,9 +134,53 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
           transition={{ duration: 3.5, repeat: Infinity }}
           className="text-lg opacity-50"
         >
-          🌻
+          🍃
         </motion.div>
       </div>
+
+      <div className="absolute top-2 left-1/2 transform -translate-x-1/2">
+        <motion.div
+          animate={{ scale: [1, 1.1, 1] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="text-lg opacity-70"
+        >
+          👑
+        </motion.div>
+      </div>
+
+      <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2">
+        <motion.div
+          animate={{ y: [-3, 3, -3] }}
+          transition={{ duration: 3, repeat: Infinity }}
+          className="text-sm opacity-60"
+        >
+          🥂
+        </motion.div>
+      </div>
+
+      {/* Additional flower decorations */}
+      <div className="absolute top-1/3 right-1/4">
+        <FlowerDecoration
+          src="/images/flowers/EF.jpg"
+          alt="Small Daisy"
+          animation="float"
+          size="small"
+          opacity={0.4}
+        />
+      </div>
+
+      <div className="absolute bottom-1/3 left-1/3">
+        <FlowerDecoration
+          src="/images/flowers/EF5.jpg"
+          alt="Small Yellow Flower"
+          animation="scale"
+          size="small"
+          opacity={0.3}
+        />
+      </div>
+
+      {/* Semi-transparent overlay for text readability */}
+      <div className="absolute inset-0 bg-black bg-opacity-20 z-5"></div>
 
       {/* Content */}
       <div className="p-8 h-full flex flex-col justify-center items-center text-center relative z-10">

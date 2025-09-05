@@ -35,20 +35,28 @@ export default function TemplatePicker({
           >
             <div 
               className="w-full h-20 rounded-lg mb-3 relative overflow-hidden"
-              style={{ background: template.background }}
+              style={{ 
+                backgroundImage: `url(${template.background})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat'
+              }}
             >
+              {/* Subtle overlay for better visibility */}
+              <div className="absolute inset-0 bg-black bg-opacity-10"></div>
+              
               {/* Pattern overlay */}
               <div 
-                className="absolute inset-0 opacity-30"
+                className="absolute inset-0 opacity-20"
                 style={{
                   backgroundImage: template.pattern === 'meskel' 
                     ? 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.3) 2px, transparent 2px)'
-                    : template.pattern === 'cultural'
-                    ? 'linear-gradient(45deg, transparent 25%, rgba(255,255,255,0.1) 25%)'
+                    : template.pattern === 'garden'
+                    ? 'radial-gradient(circle at 20% 20%, rgba(255,255,255,0.2) 3px, transparent 3px)'
                     : template.pattern === 'sunrise'
                     ? 'radial-gradient(circle at 50% 0%, rgba(255,255,255,0.3) 0%, transparent 50%)'
-                    : 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px)',
-                  backgroundSize: '20px 20px'
+                    : 'radial-gradient(circle at 10% 10%, rgba(255,255,255,0.2) 2px, transparent 2px)',
+                  backgroundSize: '15px 15px'
                 }}
               />
               
