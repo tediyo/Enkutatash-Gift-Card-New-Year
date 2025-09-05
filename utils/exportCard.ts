@@ -28,7 +28,7 @@ export const exportCard = async (
 
   try {
     const canvas = await html2canvas(element, {
-      backgroundColor: '#ffffff', // White background for better compatibility
+      backgroundColor: '#000000', // White background for better compatibility
       scale: 2, // Higher resolution
       useCORS: true,
       allowTaint: true,

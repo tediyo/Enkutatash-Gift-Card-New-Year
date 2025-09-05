@@ -11,6 +11,9 @@ interface CardPreviewProps {
 }
 
 export default function CardPreview({ card, template }: CardPreviewProps) {
+  // Debug logging
+  console.log('CardPreview template:', template.id, template.background)
+  console.log('CardPreview background URL:', `url(${template.background})`)
   const getPatternStyle = (pattern: string) => {
     switch (pattern) {
       case 'meskel':
@@ -70,18 +73,21 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
+        backgroundColor: '#f0f0f0', // Fallback background color
         ...getPatternStyle(template.pattern)
       }}
+      data-template={template.id}
+      data-background={template.background}
       initial={{ scale: 0.8, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 0.5 }}
       whileHover={{ scale: 1.02 }}
     >
-      {/* Decorative Elements - Real Flower Images + Emojis */}
+      {/* Decorative Elements - Template-based Flower Images + Emojis */}
       <div className="absolute top-4 right-4">
         <FlowerDecoration
-          src="/images/flowers/EF.jpg"
-          alt="Meskel Daisy"
+          src={template.background}
+          alt={`${template.name} Background`}
           animation="rotate"
           size="medium"
           opacity={0.8}
@@ -90,8 +96,8 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
       
       <div className="absolute top-4 left-4">
         <FlowerDecoration
-          src="/images/flowers/EF5.jpg"
-          alt="Yellow Flower"
+          src={template.background}
+          alt={`${template.name} Background`}
           animation="float"
           size="medium"
           opacity={0.7}
@@ -110,8 +116,8 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
 
       <div className="absolute bottom-4 left-4">
         <FlowerDecoration
-          src="/images/flowers/FR3.jpg"
-          alt="Flower Arrangement"
+          src={template.background}
+          alt={`${template.name} Background`}
           animation="sway"
           size="medium"
           opacity={0.6}
@@ -120,8 +126,8 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
 
       <div className="absolute top-1/2 left-4">
         <FlowerDecoration
-          src="/images/flowers/FW2.webp"
-          alt="Spring Flower"
+          src={template.background}
+          alt={`${template.name} Background`}
           animation="pulse"
           size="small"
           opacity={0.5}
@@ -158,11 +164,11 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
         </motion.div>
       </div>
 
-      {/* Additional flower decorations */}
+      {/* Additional flower decorations - Template-based */}
       <div className="absolute top-1/3 right-1/4">
         <FlowerDecoration
-          src="/images/flowers/EF.jpg"
-          alt="Small Daisy"
+          src={template.background}
+          alt={`${template.name} Background`}
           animation="float"
           size="small"
           opacity={0.4}
@@ -171,8 +177,8 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
 
       <div className="absolute bottom-1/3 left-1/3">
         <FlowerDecoration
-          src="/images/flowers/EF5.jpg"
-          alt="Small Yellow Flower"
+          src={template.background}
+          alt={`${template.name} Background`}
           animation="scale"
           size="small"
           opacity={0.3}
@@ -187,6 +193,11 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
         {/* Template Preview Icon */}
         <div className="text-4xl mb-4">
           {template.preview}
+        </div>
+
+        {/* Debug Template Info */}
+        <div className="text-xs text-white opacity-50 mb-2">
+          Template: {template.id}
         </div>
 
         {/* Amharic Greeting */}
@@ -219,7 +230,7 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            - {card.name}
+             {card.name}
           </motion.div>
         )}
 

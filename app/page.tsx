@@ -80,6 +80,9 @@ export default function Home() {
   const exportableCardRef = useRef<HTMLDivElement>(null)
 
   const handleTemplateChange = (templateId: string) => {
+    console.log('Template changing to:', templateId)
+    const newTemplate = templates.find(t => t.id === templateId)
+    console.log('New template data:', newTemplate)
     setCurrentCard(prev => ({
       ...prev,
       template: templateId
@@ -360,6 +363,7 @@ export default function Home() {
               {/* Right Side - Preview */}
               <div className="flex flex-col items-center gap-6">
                 <CardPreview
+                  key={`preview-${currentCard.template}`}
                   card={currentCard}
                   template={selectedTemplate}
                 />
@@ -367,6 +371,7 @@ export default function Home() {
                 {/* Hidden exportable card for download */}
                 <div id="exportable-card" className="hidden">
                   <ExportableCard
+                    key={`export-${currentCard.template}`}
                     ref={exportableCardRef}
                     card={currentCard}
                     template={selectedTemplate}

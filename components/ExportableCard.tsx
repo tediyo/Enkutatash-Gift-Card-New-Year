@@ -11,6 +11,9 @@ interface ExportableCardProps {
 
 const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
   ({ card, template }, ref) => {
+    // Debug logging
+    console.log('ExportableCard template:', template.id, template.background)
+    console.log('ExportableCard background URL:', `url(${template.background})`)
       const getPatternStyle = (pattern: string) => {
     switch (pattern) {
       case 'meskel':
@@ -71,18 +74,21 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
+          backgroundColor: '#f0f0f0', // Fallback background color
           ...getPatternStyle(template.pattern),
           // Ensure proper rendering for html2canvas
           transform: 'translateZ(0)',
           backfaceVisibility: 'hidden',
           WebkitBackfaceVisibility: 'hidden'
         }}
+        data-template={template.id}
+        data-background={template.background}
       >
-        {/* Decorative Elements - Real Flower Images + Emojis */}
+        {/* Decorative Elements - Template-based Flower Images + Emojis */}
         <div className="absolute top-6 right-6">
           <FlowerDecoration
-            src="/images/flowers/EF.jpg"
-            alt="Meskel Daisy"
+            src={template.background}
+            alt={`${template.name} Background`}
             animation="rotate"
             size="large"
             opacity={0.8}
@@ -91,8 +97,8 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
         
         <div className="absolute top-6 left-6">
           <FlowerDecoration
-            src="/images/flowers/EF5.jpg"
-            alt="Yellow Flower"
+            src={template.background}
+            alt={`${template.name} Background`}
             animation="float"
             size="large"
             opacity={0.7}
@@ -107,8 +113,8 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
 
         <div className="absolute bottom-6 left-6">
           <FlowerDecoration
-            src="/images/flowers/FR3.jpg"
-            alt="Flower Arrangement"
+            src={template.background}
+            alt={`${template.name} Background`}
             animation="sway"
             size="large"
             opacity={0.6}
@@ -117,8 +123,8 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
 
         <div className="absolute top-1/2 left-6">
           <FlowerDecoration
-            src="/images/flowers/FW2.webp"
-            alt="Spring Flower"
+            src={template.background}
+            alt={`${template.name} Background`}
             animation="pulse"
             size="medium"
             opacity={0.5}
@@ -143,11 +149,11 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
           </div>
         </div>
 
-        {/* Additional flower decorations */}
+        {/* Additional flower decorations - Template-based */}
         <div className="absolute top-1/3 right-1/4">
           <FlowerDecoration
-            src="/images/flowers/EF.jpg"
-            alt="Small Daisy"
+            src={template.background}
+            alt={`${template.name} Background`}
             animation="float"
             size="small"
             opacity={0.4}
@@ -156,8 +162,8 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
 
         <div className="absolute bottom-1/3 left-1/3">
           <FlowerDecoration
-            src="/images/flowers/EF5.jpg"
-            alt="Small Yellow Flower"
+            src={template.background}
+            alt={`${template.name} Background`}
             animation="scale"
             size="small"
             opacity={0.3}
@@ -166,8 +172,8 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
 
         <div className="absolute top-1/4 left-1/4">
           <FlowerDecoration
-            src="/images/flowers/FR3.jpg"
-            alt="Tiny Flower"
+            src={template.background}
+            alt={`${template.name} Background`}
             animation="pulse"
             size="small"
             opacity={0.2}
