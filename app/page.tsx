@@ -337,12 +337,12 @@ export default function Home() {
 
         <div className="relative z-10 container mx-auto px-4 py-8 md:py-16 text-center">
           <motion.h1 
-            className="mobile-hero-title text-6xl md:text-8xl font-bold text-white text-shadow-lg mb-2 md:mb-3"
+            className="mobile-hero-title text-6xl md:text-8xl font-bold text-green-400 text-shadow-lg mb-2 md:mb-3"
             initial={{ y: -50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Enkutatash
+            Enkutatash!
           </motion.h1>
           
           <motion.h2 
