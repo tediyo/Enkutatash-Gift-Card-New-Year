@@ -459,10 +459,6 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
           {template.preview}
         </div>
 
-        {/* Debug Template Info */}
-        <div className="text-xs text-white opacity-50 mb-2">
-          Template: {template.id}
-        </div>
 
         {/* Amharic Greeting */}
         {card.amharicMessage && (
