@@ -209,8 +209,7 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
           position: 'relative',
           overflow: 'hidden',
           imageRendering: 'auto',
-          textRendering: 'optimizeLegibility',
-          fontDisplay: 'block'
+          textRendering: 'optimizeLegibility'
         }}
         data-background={template.background}
       >
