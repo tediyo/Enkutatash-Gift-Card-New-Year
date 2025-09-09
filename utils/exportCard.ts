@@ -3,8 +3,6 @@ import html2canvas from 'html2canvas'
 export interface ExportOptions {
   format: 'png' | 'jpeg'
   quality: number
-  width?: number
-  height?: number
   scale?: number
 }
 
@@ -71,12 +69,8 @@ export const exportCard = async (
       useCORS: true,
       allowTaint: true,
       logging: false, // Disable logging for cleaner output
-      width: options.width || element.offsetWidth,
-      height: options.height || element.offsetHeight,
       scrollX: 0,
       scrollY: 0,
-      windowWidth: element.offsetWidth,
-      windowHeight: element.offsetHeight,
       imageTimeout: 45000, // Increase timeout for high-res images to load
       removeContainer: false, // Keep container for proper rendering
       foreignObjectRendering: false // Disable this as it can cause issues

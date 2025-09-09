@@ -246,7 +246,7 @@ export default function ShareOptions({
         <motion.button
           className={`group relative overflow-hidden ${
             isDownloading 
-              ? 'bg-gradient-to-r from-gray-400 via-gray-500 to-gray-600 cursor-not-allowed' 
+              ? 'bg-gradient-to-r from-yellow-400 via-yellow-500 to-yellow-600 cursor-not-allowed' 
               : 'bg-gradient-to-r from-green-500 via-green-600 to-emerald-600 hover:from-green-600 hover:via-green-700 hover:to-emerald-700'
           } text-white flex items-center justify-center mobile-button w-full sm:flex-1 h-12 px-8 py-3 rounded-2xl font-bold transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-green-500/25 border border-green-400/20`}
           onClick={() => !isDownloading && onDownload(selectedQuality)}
