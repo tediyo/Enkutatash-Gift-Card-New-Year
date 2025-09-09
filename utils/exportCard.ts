@@ -79,17 +79,7 @@ export const exportCard = async (
       windowHeight: element.offsetHeight,
       imageTimeout: 45000, // Increase timeout for high-res images to load
       removeContainer: false, // Keep container for proper rendering
-      foreignObjectRendering: false, // Disable this as it can cause issues
-      pixelRatio: window.devicePixelRatio || 1, // Use device pixel ratio for better quality
-      letterRendering: true, // Better text rendering
-      onclone: (clonedDoc) => {
-        // Ensure fonts are loaded in the cloned document
-        const clonedElement = clonedDoc.getElementById(elementId)
-        if (clonedElement) {
-          clonedElement.style.fontDisplay = 'block'
-          clonedElement.style.textRendering = 'optimizeLegibility'
-        }
-      }
+      foreignObjectRendering: false // Disable this as it can cause issues
     })
 
     console.log('✅ html2canvas export completed')

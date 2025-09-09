@@ -47,8 +47,6 @@ export const simpleExportCard = async (element: HTMLElement, scale: number = 4):
       logging: false,
       width: element.offsetWidth,
       height: element.offsetHeight,
-      pixelRatio: window.devicePixelRatio || 1,
-      letterRendering: true,
       imageTimeout: 45000
     })
 
