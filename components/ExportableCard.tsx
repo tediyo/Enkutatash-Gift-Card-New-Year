@@ -18,7 +18,7 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         backgroundColor: '#f0f0f0',
-        imageRendering: 'high-quality',
+        imageRendering: 'auto',
         backfaceVisibility: 'hidden',
         transform: 'translateZ(0)' // Force hardware acceleration
       }
@@ -208,7 +208,7 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
           ...borderConfig,
           position: 'relative',
           overflow: 'hidden',
-          imageRendering: 'high-quality',
+          imageRendering: 'auto',
           textRendering: 'optimizeLegibility',
           fontDisplay: 'block'
         }}
