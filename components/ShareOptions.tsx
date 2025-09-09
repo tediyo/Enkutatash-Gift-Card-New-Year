@@ -13,16 +13,24 @@ import {
   Instagram,
   QrCode,
   Smartphone,
-  Send
+  Send,
+  Settings,
+  Sparkles,
+  Zap,
+  Star,
+  CheckCircle,
+  ArrowDown,
+  Loader2
 } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 interface ShareOptionsProps {
   cardDataUrl?: string
   cardName: string
-  onDownload: () => void
+  onDownload: (quality?: 'standard' | 'high' | 'ultra') => void
   cardMessage?: string
   amharicMessage?: string
+  isDownloading?: boolean
 }
 
 export default function ShareOptions({ 
@@ -30,12 +38,33 @@ export default function ShareOptions({
   cardName, 
   onDownload, 
   cardMessage, 
-  amharicMessage 
+  amharicMessage,
+  isDownloading = false
 }: ShareOptionsProps) {
   const [showShareMenu, setShowShareMenu] = useState(false)
   const [showQRCode, setShowQRCode] = useState(false)
   const [copied, setCopied] = useState(false)
   const [qrCodeUrl, setQrCodeUrl] = useState('')
+  const [selectedQuality, setSelectedQuality] = useState<'standard' | 'high' | 'ultra'>('high')
+  const [showQualityMenu, setShowQualityMenu] = useState(false)
+  const qualityMenuRef = useRef<HTMLDivElement>(null)
+
+  // Close quality menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (qualityMenuRef.current && !qualityMenuRef.current.contains(event.target as Node)) {
+        setShowQualityMenu(false)
+      }
+    }
+
+    if (showQualityMenu) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [showQualityMenu])
 
   const shareUrl = typeof window !== 'undefined' ? window.location.href : ''
   const shareText = `🎉 ${cardMessage || 'Happy Ethiopian New Year!'} ${amharicMessage ? `\n\n${amharicMessage}` : ''}\n\nCheck out my beautiful Enkutatash greeting card! ${shareUrl}`
@@ -135,6 +164,39 @@ export default function ShareOptions({
     }
   ]
 
+  const qualityOptions = [
+    {
+      name: 'Standard',
+      value: 'standard' as const,
+      description: '2x resolution, smaller file size',
+      scale: 2,
+      icon: Star,
+      color: 'text-blue-500',
+      bgColor: 'bg-blue-50',
+      borderColor: 'border-blue-200'
+    },
+    {
+      name: 'High',
+      value: 'high' as const,
+      description: '4x resolution, balanced quality',
+      scale: 4,
+      icon: Zap,
+      color: 'text-green-500',
+      bgColor: 'bg-green-50',
+      borderColor: 'border-green-200'
+    },
+    {
+      name: 'Ultra',
+      value: 'ultra' as const,
+      description: '8x resolution, maximum quality',
+      scale: 8,
+      icon: Sparkles,
+      color: 'text-purple-500',
+      bgColor: 'bg-purple-50',
+      borderColor: 'border-purple-200'
+    }
+  ]
+
   const utilityOptions = [
     {
       name: 'Email',
@@ -179,86 +241,266 @@ export default function ShareOptions({
     <div className="space-y-3 md:space-y-4">
       <h3 className="mobile-h3 text-lg md:text-xl font-bold text-gray-800">Share Your Card</h3>
       
-      <div className="mobile-controls flex flex-col sm:flex-row gap-2 md:gap-3">
+      <div className="mobile-controls flex flex-col sm:flex-row gap-3 md:gap-4">
         {/* Download Button */}
         <motion.button
-          className="mobile-control-button bg-green-500 hover:bg-green-600 text-white flex items-center justify-center gap-2 mobile-button px-4 py-2 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
-          onClick={onDownload}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          className={`group relative overflow-hidden ${
+            isDownloading 
+              ? 'bg-gradient-to-r from-gray-400 via-gray-500 to-gray-600 cursor-not-allowed' 
+              : 'bg-gradient-to-r from-green-500 via-green-600 to-emerald-600 hover:from-green-600 hover:via-green-700 hover:to-emerald-700'
+          } text-white flex items-center justify-center mobile-button w-full sm:flex-1 h-12 px-8 py-3 rounded-2xl font-bold transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-green-500/25 border border-green-400/20`}
+          onClick={() => !isDownloading && onDownload(selectedQuality)}
+          disabled={isDownloading}
+          whileHover={!isDownloading ? { 
+            scale: 1.05,
+            y: -2
+          } : {}}
+          whileTap={!isDownloading ? { scale: 0.95 } : {}}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
         >
-          <Download className="w-4 h-4" />
-          <span className="hidden sm:inline">Download</span>
-          <span className="sm:hidden">Download</span>
+          <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <span className="hidden sm:inline relative z-10">
+            {isDownloading ? 'Generating...' : `Download ${selectedQuality.charAt(0).toUpperCase() + selectedQuality.slice(1)}`}
+          </span>
+          <span className="sm:hidden relative z-10">
+            {isDownloading ? 'Generating...' : 'Download'}
+          </span>
         </motion.button>
+
+        {/* Quality Selector */}
+        <div className="relative w-full sm:flex-1" ref={qualityMenuRef}>
+          <motion.button
+            className="group relative overflow-hidden bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-600 hover:from-blue-600 hover:via-indigo-700 hover:to-purple-700 text-white flex items-center justify-center gap-2 mobile-button w-full h-12 px-6 py-3 rounded-2xl font-bold transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-blue-500/25 border border-blue-400/20"
+            onClick={() => setShowQualityMenu(!showQualityMenu)}
+            whileHover={{ 
+              scale: 1.05,
+              y: -2
+            }}
+            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <motion.div
+              animate={{ rotate: showQualityMenu ? 180 : 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <Settings className="w-5 h-5 relative z-10" />
+            </motion.div>
+            <span className="hidden sm:inline relative z-10">Quality</span>
+            <span className="sm:hidden relative z-10">⚙️</span>
+            <motion.div
+              animate={{ y: showQualityMenu ? 2 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ArrowDown className="w-4 h-4 relative z-10" />
+            </motion.div>
+          </motion.button>
+
+          {/* Enhanced Quality Dropdown */}
+          {showQualityMenu && (
+            <motion.div
+              className="absolute top-full left-0 mt-3 w-72 bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl border border-gray-200/50 z-20 overflow-hidden"
+              initial={{ opacity: 0, y: -20, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: -20, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className="p-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <Settings className="w-4 h-4 text-gray-600" />
+                  <h4 className="text-sm font-bold text-gray-800">Export Quality</h4>
+                </div>
+                <div className="space-y-2">
+                  {qualityOptions.map((option, index) => {
+                    const IconComponent = option.icon
+                    const isSelected = selectedQuality === option.value
+                    return (
+                      <motion.button
+                        key={option.value}
+                        className={`w-full text-left p-3 rounded-xl transition-all duration-200 border-2 ${
+                          isSelected
+                            ? `${option.bgColor} ${option.borderColor} border-opacity-100 shadow-md`
+                            : 'hover:bg-gray-50 text-gray-700 border-transparent hover:border-gray-200'
+                        }`}
+                        onClick={() => {
+                          setSelectedQuality(option.value)
+                          setShowQualityMenu(false)
+                        }}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.1 }}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                      >
+                        <div className="flex items-center gap-3">
+                          <div className={`p-2 rounded-lg ${isSelected ? option.bgColor : 'bg-gray-100'}`}>
+                            <IconComponent className={`w-4 h-4 ${isSelected ? option.color : 'text-gray-600'}`} />
+                          </div>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2">
+                              <span className={`font-semibold text-sm ${isSelected ? option.color : 'text-gray-800'}`}>
+                                {option.name}
+                              </span>
+                              {isSelected && (
+                                <CheckCircle className="w-4 h-4 text-green-500" />
+                              )}
+                            </div>
+                            <div className="text-xs text-gray-500 mt-1">{option.description}</div>
+                          </div>
+                        </div>
+                      </motion.button>
+                    )
+                  })}
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </div>
 
         {/* Share Menu Toggle */}
         <motion.button
-          className="mobile-control-button bg-yellow-500 hover:bg-yellow-600 text-white flex items-center justify-center gap-2 mobile-button px-4 py-2 rounded-full font-semibold transition-all duration-300 shadow-lg hover:shadow-xl"
+          className="group relative overflow-hidden bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 hover:from-yellow-600 hover:via-orange-600 hover:to-red-600 text-white flex items-center justify-center gap-2 mobile-button w-full sm:flex-1 h-12 px-6 py-3 rounded-2xl font-bold transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-yellow-500/25 border border-yellow-400/20"
           onClick={() => setShowShareMenu(!showShareMenu)}
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ 
+            scale: 1.05,
+            y: -2
+          }}
           whileTap={{ scale: 0.95 }}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
         >
-          <Share2 className="w-4 h-4" />
-          Share
+          <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+          <motion.div
+            animate={{ 
+              rotate: showShareMenu ? 180 : 0,
+              scale: showShareMenu ? 1.1 : 1
+            }}
+            transition={{ duration: 0.3 }}
+          >
+            <Share2 className="w-5 h-5 relative z-10" />
+          </motion.div>
+          <span className="relative z-10">Share</span>
+          <motion.div
+            animate={{ y: showShareMenu ? 2 : 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <ArrowDown className="w-4 h-4 relative z-10" />
+          </motion.div>
         </motion.button>
 
       </div>
 
 
-      {/* Share Options Menu */}
+      {/* Enhanced Share Options Menu */}
       <motion.div
-        className={`overflow-hidden transition-all duration-300 ${
-          showShareMenu ? 'max-h-[600px] opacity-100' : 'max-h-0 opacity-0'
+        className={`overflow-hidden transition-all duration-500 ${
+          showShareMenu ? 'max-h-[700px] opacity-100' : 'max-h-0 opacity-0'
         }`}
       >
-        <div className="mt-3 md:mt-4 space-y-4 md:space-y-6">
+        <motion.div 
+          className="mt-4 md:mt-6 space-y-6 md:space-y-8"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: showShareMenu ? 1 : 0 }}
+          transition={{ delay: 0.2 }}
+        >
           {/* Social Media Platforms */}
-          <div>
-            <h4 className="mobile-h4 text-sm md:text-sm font-semibold text-gray-700 mb-2 md:mb-3">Social Media</h4>
-            <div className="mobile-share-grid grid grid-cols-2 sm:grid-cols-3 gap-2 md:gap-3">
+          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-4 md:p-6 border border-blue-200/50">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="p-2 bg-blue-100 rounded-lg">
+                <Share2 className="w-4 h-4 text-blue-600" />
+              </div>
+              <h4 className="text-sm md:text-base font-bold text-gray-800">Social Media</h4>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 md:gap-4">
               {socialMediaOptions.map((option, index) => (
                 <motion.button
                   key={option.name}
-                  className="mobile-share-button flex items-center justify-center p-3 md:p-4 rounded-lg md:rounded-xl transition-all duration-200 border-2 border-green-300 hover:border-green-500 bg-white hover:bg-green-50 mobile-touch-target"
+                  className="group relative overflow-hidden flex flex-col items-center justify-center p-4 md:p-5 rounded-xl transition-all duration-300 border-2 border-white/50 hover:border-blue-300 bg-white/80 hover:bg-white backdrop-blur-sm shadow-lg hover:shadow-xl mobile-touch-target"
                   onClick={option.action}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ delay: index * 0.1 }}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    y: -2
+                  }}
+                  whileTap={{ scale: 0.95 }}
                   title={option.name === 'Copy Link' && copied ? 'Copied!' : option.name}
                 >
-                  <option.icon className="mobile-share-icon w-5 h-5 md:w-6 md:h-6 text-gray-700" />
-                </motion.button>
-              ))}
-            </div>
-          </div>
-
-          {/* Utility Options */}
-          <div>
-            <h4 className="mobile-h4 text-sm md:text-sm font-semibold text-gray-700 mb-2 md:mb-3">More Options</h4>
-            <div className="mobile-share-grid grid grid-cols-2 gap-2 md:gap-3">
-              {utilityOptions.map((option, index) => (
-                <motion.button
-                  key={option.name}
-                  className="mobile-share-button flex flex-col items-center gap-1 md:gap-2 p-2 md:p-3 rounded-lg md:rounded-xl transition-all duration-200 border-2 border-green-300 hover:border-green-500 bg-white hover:bg-green-50 mobile-touch-target"
-                  onClick={option.action}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: (index + socialMediaOptions.length) * 0.1 }}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <option.icon className="mobile-share-icon w-4 h-4 md:w-5 md:h-5 text-gray-700" />
-                  <span className="text-xs font-medium text-gray-700">
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <motion.div
+                    animate={{ 
+                      scale: [1, 1.1, 1],
+                      rotate: [0, 5, -5, 0]
+                    }}
+                    transition={{ 
+                      duration: 2, 
+                      repeat: Infinity, 
+                      repeatDelay: 3,
+                      delay: index * 0.2
+                    }}
+                  >
+                    <option.icon className="w-6 h-6 md:w-7 md:h-7 text-gray-700 group-hover:text-blue-600 relative z-10" />
+                  </motion.div>
+                  <span className="text-xs font-semibold text-gray-700 group-hover:text-blue-800 mt-2 relative z-10">
                     {option.name === 'Copy Link' && copied ? 'Copied!' : option.name}
                   </span>
                 </motion.button>
               ))}
             </div>
           </div>
-        </div>
+
+          {/* Utility Options */}
+          <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-4 md:p-6 border border-green-200/50">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="p-2 bg-green-100 rounded-lg">
+                <Settings className="w-4 h-4 text-green-600" />
+              </div>
+              <h4 className="text-sm md:text-base font-bold text-gray-800">More Options</h4>
+            </div>
+            <div className="grid grid-cols-2 gap-3 md:gap-4">
+              {utilityOptions.map((option, index) => (
+                <motion.button
+                  key={option.name}
+                  className="group relative overflow-hidden flex flex-col items-center gap-2 p-4 md:p-5 rounded-xl transition-all duration-300 border-2 border-white/50 hover:border-green-300 bg-white/80 hover:bg-white backdrop-blur-sm shadow-lg hover:shadow-xl mobile-touch-target"
+                  onClick={option.action}
+                  initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ delay: (index + socialMediaOptions.length) * 0.1 }}
+                  whileHover={{ 
+                    scale: 1.05,
+                    y: -2
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <motion.div
+                    animate={{ 
+                      scale: [1, 1.1, 1],
+                      rotate: [0, 5, -5, 0]
+                    }}
+                    transition={{ 
+                      duration: 2, 
+                      repeat: Infinity, 
+                      repeatDelay: 3,
+                      delay: (index + socialMediaOptions.length) * 0.2
+                    }}
+                  >
+                    <option.icon className="w-5 h-5 md:w-6 md:h-6 text-gray-700 group-hover:text-green-600 relative z-10" />
+                  </motion.div>
+                  <span className="text-xs font-semibold text-gray-700 group-hover:text-green-800 relative z-10">
+                    {option.name === 'Copy Link' && copied ? 'Copied!' : option.name}
+                  </span>
+                </motion.button>
+              ))}
+            </div>
+          </div>
+        </motion.div>
       </motion.div>
 
       {/* QR Code Modal */}

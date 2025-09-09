@@ -17,7 +17,10 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
-        backgroundColor: '#f0f0f0'
+        backgroundColor: '#f0f0f0',
+        imageRendering: 'high-quality',
+        backfaceVisibility: 'hidden',
+        transform: 'translateZ(0)' // Force hardware acceleration
       }
 
       const templateConfig = getTemplateConfig(template.id)
@@ -204,7 +207,10 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
           ...templateStyle,
           ...borderConfig,
           position: 'relative',
-          overflow: 'hidden'
+          overflow: 'hidden',
+          imageRendering: 'high-quality',
+          textRendering: 'optimizeLegibility',
+          fontDisplay: 'block'
         }}
         data-background={template.background}
       >

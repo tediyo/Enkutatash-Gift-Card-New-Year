@@ -1,5 +1,5 @@
 // Alternative simple export method
-export const simpleExportCard = async (element: HTMLElement): Promise<string> => {
+export const simpleExportCard = async (element: HTMLElement, scale: number = 4): Promise<string> => {
   // Create a canvas element
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
@@ -8,12 +8,13 @@ export const simpleExportCard = async (element: HTMLElement): Promise<string> =>
     throw new Error('Could not get canvas context')
   }
 
-  // Set canvas size
-  canvas.width = element.offsetWidth * 2 // Higher resolution
-  canvas.height = element.offsetHeight * 2
+  // Set canvas size with higher resolution
+  const scaleFactor = scale // Use provided scale
+  canvas.width = element.offsetWidth * scaleFactor
+  canvas.height = element.offsetHeight * scaleFactor
 
   // Scale the context
-  ctx.scale(2, 2)
+  ctx.scale(scaleFactor, scaleFactor)
 
   // Create a temporary container to render the element
   const tempContainer = document.createElement('div')
@@ -40,12 +41,15 @@ export const simpleExportCard = async (element: HTMLElement): Promise<string> =>
     const html2canvas = (await import('html2canvas')).default
     const canvasResult = await html2canvas(tempContainer, {
       backgroundColor: '#ffffff',
-      scale: 2,
+      scale: scale, // Use provided scale
       useCORS: true,
       allowTaint: true,
       logging: false,
       width: element.offsetWidth,
-      height: element.offsetHeight
+      height: element.offsetHeight,
+      pixelRatio: window.devicePixelRatio || 1,
+      letterRendering: true,
+      imageTimeout: 45000
     })
 
     return canvasResult.toDataURL('image/png', 1)
@@ -56,7 +60,7 @@ export const simpleExportCard = async (element: HTMLElement): Promise<string> =>
 }
 
 // Fallback method using canvas API directly
-export const canvasExportCard = (element: HTMLElement): string => {
+export const canvasExportCard = (element: HTMLElement, scale: number = 4): string => {
   const canvas = document.createElement('canvas')
   const ctx = canvas.getContext('2d')
   
@@ -64,12 +68,13 @@ export const canvasExportCard = (element: HTMLElement): string => {
     throw new Error('Could not get canvas context')
   }
 
-  // Set canvas size
-  canvas.width = element.offsetWidth * 2
-  canvas.height = element.offsetHeight * 2
+  // Set canvas size with higher resolution
+  const scaleFactor = scale // Use provided scale
+  canvas.width = element.offsetWidth * scaleFactor
+  canvas.height = element.offsetHeight * scaleFactor
 
   // Scale the context
-  ctx.scale(2, 2)
+  ctx.scale(scaleFactor, scaleFactor)
 
   // Fill with white background
   ctx.fillStyle = '#ffffff'

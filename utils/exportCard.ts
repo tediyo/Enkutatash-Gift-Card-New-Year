@@ -5,6 +5,7 @@ export interface ExportOptions {
   quality: number
   width?: number
   height?: number
+  scale?: number
 }
 
 export const exportCard = async (
@@ -66,7 +67,7 @@ export const exportCard = async (
     
     const canvas = await html2canvas(element, {
       backgroundColor: null, // Keep original background
-      scale: 2, // Higher resolution
+      scale: options.scale || 4, // Use provided scale or default to 4x
       useCORS: true,
       allowTaint: true,
       logging: false, // Disable logging for cleaner output
@@ -76,9 +77,19 @@ export const exportCard = async (
       scrollY: 0,
       windowWidth: element.offsetWidth,
       windowHeight: element.offsetHeight,
-      imageTimeout: 30000, // Increase timeout for images to load
+      imageTimeout: 45000, // Increase timeout for high-res images to load
       removeContainer: false, // Keep container for proper rendering
       foreignObjectRendering: false, // Disable this as it can cause issues
+      pixelRatio: window.devicePixelRatio || 1, // Use device pixel ratio for better quality
+      letterRendering: true, // Better text rendering
+      onclone: (clonedDoc) => {
+        // Ensure fonts are loaded in the cloned document
+        const clonedElement = clonedDoc.getElementById(elementId)
+        if (clonedElement) {
+          clonedElement.style.fontDisplay = 'block'
+          clonedElement.style.textRendering = 'optimizeLegibility'
+        }
+      }
     })
 
     console.log('✅ html2canvas export completed')

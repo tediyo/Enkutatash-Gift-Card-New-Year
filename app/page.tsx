@@ -184,13 +184,20 @@ export default function Home() {
   const preloadImage = (src: string): Promise<void> => {
     return new Promise((resolve, reject) => {
       const img = new Image()
-      img.onload = () => resolve()
-      img.onerror = () => reject(new Error(`Failed to load image: ${src}`))
+      img.crossOrigin = 'anonymous' // Enable CORS for better quality
+      img.onload = () => {
+        console.log('Image preloaded successfully:', src)
+        resolve()
+      }
+      img.onerror = () => {
+        console.warn('Failed to preload image:', src)
+        reject(new Error(`Failed to load image: ${src}`))
+      }
       img.src = src
     })
   }
 
-  const handleDownload = async () => {
+  const handleDownload = async (quality: 'standard' | 'high' | 'ultra' = 'high') => {
     if (!exportableCardRef.current) {
       console.warn('Card preview not ready. Please wait a moment and try again.')
       return
@@ -219,25 +226,37 @@ export default function Home() {
       
       let dataUrl: string
       
+      // Get quality settings
+      const qualitySettings = {
+        standard: { scale: 2, width: 800, height: 1000 },
+        high: { scale: 4, width: 1200, height: 1500 },
+        ultra: { scale: 8, width: 1600, height: 2000 }
+      }
+      
+      const settings = qualitySettings[quality]
+      
       try {
         // Try the main export method first
         dataUrl = await exportCard('exportable-card', {
           format: 'png',
-          quality: 1
+          quality: 1,
+          width: settings.width,
+          height: settings.height,
+          scale: settings.scale
         })
-        console.log('Main export method successful')
+        console.log(`Main export method successful with ${quality} quality`)
       } catch (mainError) {
         console.warn('Main export failed, trying alternative method:', mainError)
         
         try {
           // Try the simple export method
-          dataUrl = await simpleExportCard(exportableCardRef.current)
+          dataUrl = await simpleExportCard(exportableCardRef.current, settings.scale)
           console.log('Alternative export method successful')
         } catch (altError) {
           console.warn('Alternative export failed, using canvas fallback:', altError)
           
           // Use canvas fallback
-          dataUrl = canvasExportCard(exportableCardRef.current)
+          dataUrl = canvasExportCard(exportableCardRef.current, settings.scale)
           console.log('Canvas fallback successful')
         }
       }
@@ -464,6 +483,7 @@ export default function Home() {
                   onDownload={handleDownload}
                   cardMessage={currentCard.message}
                   amharicMessage={currentCard.amharicMessage}
+                  isDownloading={isGenerating}
                 />
               </div>
 
