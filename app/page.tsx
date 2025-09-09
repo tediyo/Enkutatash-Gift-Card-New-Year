@@ -228,9 +228,9 @@ export default function Home() {
       
       // Get quality settings
       const qualitySettings = {
-        standard: { scale: 2, width: 800, height: 1000 },
-        high: { scale: 4, width: 1200, height: 1500 },
-        ultra: { scale: 8, width: 1600, height: 2000 }
+        standard: { scale: 2 },
+        high: { scale: 4 },
+        ultra: { scale: 8 }
       }
       
       const settings = qualitySettings[quality]
@@ -240,8 +240,6 @@ export default function Home() {
         dataUrl = await exportCard('exportable-card', {
           format: 'png',
           quality: 1,
-          width: settings.width,
-          height: settings.height,
           scale: settings.scale
         })
         console.log(`Main export method successful with ${quality} quality`)
@@ -364,14 +362,14 @@ export default function Home() {
             Enkutatash! | እንቁጣጣሽ !
           </motion.h1>
           
-          <motion.h2 
+          {/* <motion.h2 
             className="mobile-hero-title text-4xl md:text-6xl font-bold text-green-400 text-shadow-lg mb-4 md:mb-6 font-amharic"
             initial={{ y: -30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
             እንኳንታታሽ
-          </motion.h2>
+          </motion.h2> */}
           
           <motion.p 
             className="mobile-hero-subtitle text-2xl md:text-3xl text-green-400 text-shadow mb-2 md:mb-4 font-amharic"
