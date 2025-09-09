@@ -464,7 +464,7 @@ export default function Home() {
                 />
 
                 <TextInput
-                  label="Amharic Message"
+                  label="Write Message with your own language "
                   value={currentCard.amharicMessage || ''}
                   onChange={handleAmharicMessageChange}
                   placeholder="Enter Amharic greeting"
