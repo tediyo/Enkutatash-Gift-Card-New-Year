@@ -271,7 +271,7 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
                 lineHeight: '1.2'
               }}
             >
-              - {card.name}
+              {card.name}
             </div>
           )}
 
@@ -284,8 +284,21 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
               opacity: 0.8
             }}
           >
-            {new Date().getFullYear()}
+            2018
           </div>
+        </div>
+
+        {/* Watermark */}
+        <div 
+          className="absolute bottom-2 left-1/2 transform -translate-x-1/2 text-xs font-medium opacity-60"
+          style={{
+            ...textConfig,
+            fontSize: '10px',
+            color: 'rgba(255, 255, 255, 0.7)',
+            textShadow: '1px 1px 2px rgba(0, 0, 0, 0.5)'
+          }}
+        >
+          @thedron16
         </div>
 
         {/* Corner Decorations */}
