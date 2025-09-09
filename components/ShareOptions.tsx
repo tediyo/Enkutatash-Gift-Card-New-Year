@@ -272,7 +272,7 @@ export default function ShareOptions({
         {/* Quality Selector */}
         <div className="relative w-full sm:flex-1" ref={qualityMenuRef}>
           <motion.button
-            className="group relative overflow-hidden bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-600 hover:from-blue-600 hover:via-indigo-700 hover:to-purple-700 text-white flex items-center justify-center gap-2 mobile-button w-full h-12 px-6 py-3 rounded-2xl font-bold transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-blue-500/25 border border-blue-400/20"
+            className="group relative overflow-hidden bg-gradient-to-r from-blue-500 via-indigo-600 to-purple-600 hover:from-blue-600 hover:via-indigo-700 hover:to-purple-700 text-white flex items-center justify-center mobile-button w-full h-12 px-8 py-3 rounded-2xl font-bold transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-blue-500/25 border border-blue-400/20"
             onClick={() => setShowQualityMenu(!showQualityMenu)}
             whileHover={{ 
               scale: 1.05,
@@ -284,20 +284,7 @@ export default function ShareOptions({
             transition={{ delay: 0.2 }}
           >
             <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            <motion.div
-              animate={{ rotate: showQualityMenu ? 180 : 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <Settings className="w-5 h-5 relative z-10" />
-            </motion.div>
-            <span className="hidden sm:inline relative z-10">Quality</span>
-            <span className="sm:hidden relative z-10">⚙️</span>
-            <motion.div
-              animate={{ y: showQualityMenu ? 2 : 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <ArrowDown className="w-4 h-4 relative z-10" />
-            </motion.div>
+            <span className="relative z-10">Choose Quality</span>
           </motion.button>
 
           {/* Enhanced Quality Dropdown */}
@@ -363,7 +350,7 @@ export default function ShareOptions({
 
         {/* Share Menu Toggle */}
         <motion.button
-          className="group relative overflow-hidden bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 hover:from-yellow-600 hover:via-orange-600 hover:to-red-600 text-white flex items-center justify-center gap-2 mobile-button w-full sm:flex-1 h-12 px-6 py-3 rounded-2xl font-bold transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-yellow-500/25 border border-yellow-400/20"
+          className="group relative overflow-hidden bg-gradient-to-r from-yellow-500 via-orange-500 to-red-500 hover:from-yellow-600 hover:via-orange-600 hover:to-red-600 text-white flex items-center justify-center mobile-button w-full sm:flex-1 h-12 px-8 py-3 rounded-2xl font-bold transition-all duration-300 shadow-lg hover:shadow-2xl hover:shadow-yellow-500/25 border border-yellow-400/20"
           onClick={() => setShowShareMenu(!showShareMenu)}
           whileHover={{ 
             scale: 1.05,
@@ -375,22 +362,7 @@ export default function ShareOptions({
           transition={{ delay: 0.3 }}
         >
           <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          <motion.div
-            animate={{ 
-              rotate: showShareMenu ? 180 : 0,
-              scale: showShareMenu ? 1.1 : 1
-            }}
-            transition={{ duration: 0.3 }}
-          >
-            <Share2 className="w-5 h-5 relative z-10" />
-          </motion.div>
           <span className="relative z-10">Share</span>
-          <motion.div
-            animate={{ y: showShareMenu ? 2 : 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <ArrowDown className="w-4 h-4 relative z-10" />
-          </motion.div>
         </motion.button>
 
       </div>
