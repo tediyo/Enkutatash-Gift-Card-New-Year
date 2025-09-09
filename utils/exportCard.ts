@@ -5,6 +5,7 @@ export interface ExportOptions {
   quality: number
   width?: number
   height?: number
+  scale?: number
 }
 
 export const exportCard = async (
@@ -66,7 +67,7 @@ export const exportCard = async (
     
     const canvas = await html2canvas(element, {
       backgroundColor: null, // Keep original background
-      scale: 2, // Higher resolution
+      scale: options.scale || 4, // Use provided scale or default to 4x
       useCORS: true,
       allowTaint: true,
       logging: false, // Disable logging for cleaner output
@@ -76,9 +77,9 @@ export const exportCard = async (
       scrollY: 0,
       windowWidth: element.offsetWidth,
       windowHeight: element.offsetHeight,
-      imageTimeout: 30000, // Increase timeout for images to load
+      imageTimeout: 45000, // Increase timeout for high-res images to load
       removeContainer: false, // Keep container for proper rendering
-      foreignObjectRendering: false, // Disable this as it can cause issues
+      foreignObjectRendering: false // Disable this as it can cause issues
     })
 
     console.log('✅ html2canvas export completed')
