@@ -19,7 +19,6 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
         backgroundRepeat: 'no-repeat',
         backgroundColor: '#f0f0f0',
         imageRendering: 'auto',
-        backfaceVisibility: 'hidden',
         transform: 'translateZ(0)' // Force hardware acceleration
       }
 
