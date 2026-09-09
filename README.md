@@ -23,7 +23,7 @@ A beautiful web application for creating and sharing Ethiopian New Year (Enkutat
 - Social media preview
 
 ### ⏰ **Countdown Timer**
-- Live countdown to Ethiopian New Year 2024
+- Live countdown to Ethiopian New Year 2026
 - Beautiful animated display
 
 ## 🛠️ Tech Stack

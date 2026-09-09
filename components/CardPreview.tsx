@@ -521,7 +521,7 @@ export default function CardPreview({ card, template }: CardPreviewProps) {
           animate={{ opacity: 0.8 }}
           transition={{ delay: 0.5 }}
         >
-          2024
+          2019 ዓ.ም. | 2026
         </motion.div>
       </div>
 

@@ -284,7 +284,7 @@ const ExportableCard = forwardRef<HTMLDivElement, ExportableCardProps>(
               opacity: 0.8
             }}
           >
-            2018
+            2019 ዓ.ም. | 2026
           </div>
         </div>
 

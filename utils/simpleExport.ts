@@ -89,7 +89,7 @@ export const canvasExportCard = (element: HTMLElement, scale: number = 4): strin
   ctx.fillText('Happy Ethiopian New Year!', element.offsetWidth / 2, element.offsetHeight / 2)
   
   ctx.font = '16px Arial'
-  ctx.fillText('Enkutatash 2024', element.offsetWidth / 2, element.offsetHeight / 2 + 40)
+  ctx.fillText('Enkutatash 2026', element.offsetWidth / 2, element.offsetHeight / 2 + 40)
 
   return canvas.toDataURL('image/png', 1)
 }
