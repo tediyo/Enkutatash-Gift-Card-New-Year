@@ -1,10 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
+  reactStrictMode: true,
   images: {
-    domains: ['fonts.googleapis.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'fonts.googleapis.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'api.qrserver.com',
+      },
+    ],
   },
 }
 

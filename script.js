@@ -1,7 +1,7 @@
 // Ethiopian New Year Countdown and Interactive Features
 
-// Set the target date for Ethiopian New Year 2024 (September 11, 2024)
-const targetDate = new Date('2024-09-11T00:00:00').getTime();
+// Set the target date for Ethiopian New Year 2026 (September 11, 2026)
+const targetDate = new Date('2026-09-11T00:00:00').getTime();
 
 // Update countdown every second
 function updateCountdown() {
@@ -236,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // createConfetti();
     
     console.log('🎉 Ethiopian New Year celebration page loaded!');
-    console.log('Enkutatash 2024 - May this new year bring you joy and prosperity!');
+    console.log('Enkutatash 2026 - May this new year bring you joy and prosperity!');
 });
 
 // Add keyboard shortcuts

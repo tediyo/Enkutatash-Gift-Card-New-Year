@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 
 interface FireworkProps {
   x: number
@@ -81,6 +81,19 @@ interface FireworksProps {
   isActive: boolean
 }
 
+const FIREWORK_COLORS = [
+  '#FF6B35', // Ethiopian red
+  '#FFD700', // Gold
+  '#FF1493', // Deep pink
+  '#00CED1', // Dark turquoise
+  '#9370DB', // Medium purple
+  '#FF69B4', // Hot pink
+  '#32CD32', // Lime green
+  '#FF8C00', // Dark orange
+  '#FF6347', // Tomato
+  '#20B2AA'  // Light sea green
+]
+
 export default function Fireworks({ isActive }: FireworksProps) {
   const [fireworks, setFireworks] = useState<Array<{
     id: number
@@ -89,19 +102,6 @@ export default function Fireworks({ isActive }: FireworksProps) {
     delay: number
     color: string
   }>>([])
-
-  const colors = [
-    '#FF6B35', // Ethiopian red
-    '#FFD700', // Gold
-    '#FF1493', // Deep pink
-    '#00CED1', // Dark turquoise
-    '#9370DB', // Medium purple
-    '#FF69B4', // Hot pink
-    '#32CD32', // Lime green
-    '#FF8C00', // Dark orange
-    '#FF6347', // Tomato
-    '#20B2AA'  // Light sea green
-  ]
 
   useEffect(() => {
     if (!isActive) {
@@ -115,7 +115,7 @@ export default function Fireworks({ isActive }: FireworksProps) {
         x: Math.random() * (typeof window !== 'undefined' ? window.innerWidth : 800),
         y: Math.random() * 300 + 100, // Keep fireworks in upper area
         delay: Math.random() * 0.5,
-        color: colors[Math.floor(Math.random() * colors.length)]
+        color: FIREWORK_COLORS[Math.floor(Math.random() * FIREWORK_COLORS.length)]
       }
       
       setFireworks(prev => [...prev, newFirework])
@@ -138,6 +138,19 @@ export default function Fireworks({ isActive }: FireworksProps) {
 
     return () => clearInterval(interval)
   }, [isActive])
+
+  // Stable floating emojis to prevent jumpy re-renders
+  const floatingEmojis = useMemo(() => {
+    const emojiList = ['🎉', '🎊', '✨', '🌟', '💫', '🎆', '🎇', '🥳', '🌼', '🌺']
+    return Array.from({ length: 16 }).map((_, i) => ({
+      id: i,
+      emoji: emojiList[i % emojiList.length],
+      left: `${(i * 6.2 + Math.random() * 4)}%`,
+      top: `${Math.random() * 80 + 10}%`,
+      duration: 3.5 + (i % 3) * 0.8,
+      delay: (i % 5) * 0.4
+    }))
+  }, [])
 
   if (!isActive) return null
 
@@ -162,13 +175,13 @@ export default function Fireworks({ isActive }: FireworksProps) {
       />
       
       {/* Floating emojis */}
-      {Array.from({ length: 20 }).map((_, i) => (
+      {floatingEmojis.map((item) => (
         <motion.div
-          key={i}
-          className="absolute text-4xl pointer-events-none"
+          key={item.id}
+          className="absolute text-3xl md:text-4xl pointer-events-none"
           style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
+            left: item.left,
+            top: item.top,
           }}
           initial={{ 
             y: 0, 
@@ -177,19 +190,19 @@ export default function Fireworks({ isActive }: FireworksProps) {
             rotate: 0
           }}
           animate={{ 
-            y: -200,
+            y: -180,
             opacity: [0, 1, 0],
-            scale: [0, 1, 0],
+            scale: [0.5, 1.2, 0.5],
             rotate: 360
           }}
           transition={{
-            duration: 3 + Math.random() * 2,
-            delay: Math.random() * 2,
+            duration: item.duration,
+            delay: item.delay,
             repeat: Infinity,
-            repeatDelay: Math.random() * 3
+            repeatDelay: 1.5
           }}
         >
-          {['🎉', '🎊', '✨', '🌟', '💫', '🎆', '🎇', '🥳'][Math.floor(Math.random() * 8)]}
+          {item.emoji}
         </motion.div>
       ))}
     </div>
